@@ -1,0 +1,32 @@
+{
+  "Jayaprakash367/LUMORA": {
+    "title": "LUMORA",
+    "description": "A smart AI-powered lighting control system for homes and offices.",
+    "image": "https://raw.githubusercontent.com/Jayaprakash367/LUMORA/main/preview.png",
+    "link": "https://github.com/Jayaprakash367/LUMORA"
+  },
+  "Jayaprakash367/SafeNet": {
+    "title": "SafeNet",
+    "description": "A secure network monitoring and intrusion detection platform.",
+    "image": "https://raw.githubusercontent.com/Jayaprakash367/SafeNet/main/preview.png",
+    "link": "https://github.com/Jayaprakash367/SafeNet"
+  },
+  "Jayaprakash367/Scannon.Ai": {
+    "title": "Scannon.Ai",
+    "description": "AI-powered document scanner and analyzer for business workflows.",
+    "image": "https://raw.githubusercontent.com/Jayaprakash367/Scannon.Ai/main/preview.png",
+    "link": "https://github.com/Jayaprakash367/Scannon.Ai"
+  },
+  "Jayaprakash367/Hospital_Management": {
+    "title": "Hospital Management",
+    "description": "Comprehensive hospital management system with patient, staff, and billing modules.",
+    "image": "https://raw.githubusercontent.com/Jayaprakash367/Hospital_Management/main/preview.png",
+    "link": "https://github.com/Jayaprakash367/Hospital_Management"
+  },
+  "Jayaprakash367/Credit_Card_Fraud_Detection": {
+    "title": "Credit Card Fraud Detection",
+    "description": "Machine learning project for detecting fraudulent credit card transactions.",
+    "image": "https://raw.githubusercontent.com/Jayaprakash367/Credit_Card_Fraud_Detection/main/preview.png",
+    "link": "https://github.com/Jayaprakash367/Credit_Card_Fraud_Detection"
+  }
+}

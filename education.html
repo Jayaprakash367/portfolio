@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education - Jayaprakash K</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="education-page">
+    <!-- Liquid Cursor -->
+    <div class="liquid-cursor"></div>
+    <canvas id="cursor-trail"></canvas>
+    
+    <!-- Particle Field -->
+    <canvas id="particle-field"></canvas>
+    
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-content">
+            <div class="loader-text">LOADING EDUCATION</div>
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <a href="index.html"><span class="brand-text">JAYAPRAKASH</span></a>
+            <div class="brand-dot"></div>
+        </div>
+        <div class="nav-menu-btn">
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    
+    <!-- Full Screen Menu -->
+    <div class="fullscreen-menu">
+        <div class="menu-bg"></div>
+        <div class="menu-content">
+            <a href="index.html" class="menu-link" data-text="Home">
+                <span class="link-number">01</span>
+                <span class="link-text">Home</span>
+            </a>
+            <a href="projects.html" class="menu-link" data-text="Projects">
+                <span class="link-number">02</span>
+                <span class="link-text">Projects</span>
+            </a>
+            <a href="skills.html" class="menu-link" data-text="Skills">
+                <span class="link-number">03</span>
+                <span class="link-text">Skills</span>
+            </a>
+            <a href="education.html" class="menu-link active" data-text="Education">
+                <span class="link-number">04</span>
+                <span class="link-text">Education</span>
+            </a>
+        </div>
+        <div class="menu-footer">
+            <div class="menu-socials">
+                <a href="https://github.com/Jayaprakash367" class="social-icon" rel="noopener" target="_blank">GH</a>
+                <a href="#" class="social-icon">LI</a>
+                <a href="#" class="social-icon">TW</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Education Section -->
+    <section class="education-section">
+        <div class="page-header">
+            <h1 class="page-title">
+                <span class="title-line">ACADEMIC</span>
+                <span class="title-line">JOURNEY</span>
+            </h1>
+            <p class="page-subtitle">Education, certifications, and achievements</p>
+        </div>
+        
+        <div class="timeline-container">
+            <!-- Timeline Line -->
+            <div class="timeline-line"></div>
+            
+            <!-- Education Item 1 -->
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2022 - 2026</div>
+                    <h2 class="timeline-title">Bachelor of Engineering in Computer Science</h2>
+                    <div class="timeline-institution">Sri Eshwar College of Engineering, Coimbatore</div>
+                    <p class="timeline-description">
+                        Pursuing comprehensive studies in Computer Science with specialization in Artificial Intelligence and Machine Learning. Active participant in technical symposiums and coding competitions.
+                    </p>
+                    <div class="timeline-achievements">
+                        <h4>Key Achievements:</h4>
+                        <ul>
+                            <li>Developed multiple AI-powered projects including Scannon.AI for privacy protection</li>
+                            <li>Built hospital management system with advanced features</li>
+                            <li>Active contributor to open-source projects on GitHub</li>
+                            <li>Participated in various hackathons and technical events</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Education Item 2 -->
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2020 - 2022</div>
+                    <h2 class="timeline-title">Higher Secondary Education (HSC)</h2>
+                    <div class="timeline-institution">Government Higher Secondary School, Coimbatore</div>
+                    <p class="timeline-description">
+                        Completed higher secondary education with focus on Computer Science and Mathematics. Developed strong foundation in programming and logical thinking.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Certifications Section -->
+            <div class="certifications-section">
+                <h2 class="section-heading">Certifications & Training</h2>
+                <div class="certifications-grid">
+                    <div class="cert-card">
+                        <div class="cert-icon">
+                            <svg viewBox="0 0 24 24"><path d="M9 21.5l-6-2.25V6l6 2.25V21.5M10 8.5l6-2.25V19.5l-6 2.25V8.5m7-4.5v13.25L24 6L17 4M1 6l7 2.25V6.75L1 4.5V6z"/></svg>
+                        </div>
+                        <h3 class="cert-title">Machine Learning</h3>
+                        <p class="cert-provider">Online Platform</p>
+                    </div>
+                    
+                    <div class="cert-card">
+                        <div class="cert-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                        </div>
+                        <h3 class="cert-title">Cybersecurity Fundamentals</h3>
+                        <p class="cert-provider">Online Platform</p>
+                    </div>
+                    
+                    <div class="cert-card">
+                        <div class="cert-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>
+                        </div>
+                        <h3 class="cert-title">Web Development</h3>
+                        <p class="cert-provider">Online Platform</p>
+                    </div>
+                    
+                    <div class="cert-card">
+                        <div class="cert-icon">
+                            <svg viewBox="0 0 24 24"><path d="M13.13 22.19L11.5 18.36C13.07 17.78 14.54 17 15.9 16.09L13.13 22.19M5.64 12.5L1.81 10.87L7.91 8.1C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39C21.61 2.39 16.66 .269 11 5.93C8.81 8.12 7.5 10.53 6.65 12.64C6.37 13.39 6.56 14.21 7.11 14.77L9.24 16.89C9.79 17.45 10.61 17.63 11.36 17.35C13.5 16.53 15.88 15.19 18.07 13C23.73 7.34 21.61 2.39 21.61 2.39M14.54 9.46C13.76 8.68 13.76 7.41 14.54 6.63S16.59 5.85 17.37 6.63C18.14 7.41 18.15 8.68 17.37 9.46C16.59 10.24 15.32 10.24 14.54 9.46M8.88 16.53L7.47 15.12L8.88 16.53M6.24 22L9.88 18.36C9.54 18.27 9.21 18.12 8.91 17.91L4.83 22H6.24M2 22H3.41L8.18 17.24L6.76 15.83L2 20.59V22M2 19.17L6.09 15.09C5.88 14.79 5.73 14.47 5.64 14.12L2 17.76V19.17Z"/></svg>
+                        </div>
+                        <h3 class="cert-title">Python Programming</h3>
+                        <p class="cert-provider">Online Platform</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>&copy; 2025 Jayaprakash K. All rights reserved.</p>
+    </footer>
+    
+    <script src="main.js"></script>
+</body>
+</html>

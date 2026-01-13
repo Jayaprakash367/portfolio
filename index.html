@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jayaprakash K - Portfolio</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Liquid Cursor -->
+    <div class="liquid-cursor"></div>
+    <canvas id="cursor-trail"></canvas>
+    
+    <!-- Particle Field -->
+    <canvas id="particle-field"></canvas>
+    
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-content">
+            <div class="loader-text">LOADING</div>
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <span class="brand-text">JAYAPRAKASH</span>
+            <div class="brand-dot"></div>
+        </div>
+        <div class="nav-menu-btn">
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    
+    <!-- Full Screen Menu -->
+    <div class="fullscreen-menu">
+        <div class="menu-bg"></div>
+        <div class="menu-content">
+            <a href="index.html" class="menu-link active" data-text="Home">
+                <span class="link-number">01</span>
+                <span class="link-text">Home</span>
+            </a>
+            <a href="projects.html" class="menu-link" data-text="Projects">
+                <span class="link-number">02</span>
+                <span class="link-text">Projects</span>
+            </a>
+            <a href="skills.html" class="menu-link" data-text="Skills">
+                <span class="link-number">03</span>
+                <span class="link-text">Skills</span>
+            </a>
+            <a href="education.html" class="menu-link" data-text="Education">
+                <span class="link-number">04</span>
+                <span class="link-text">Education</span>
+            </a>
+        </div>
+        <div class="menu-footer">
+            <div class="menu-socials">
+                <a href="https://github.com/Jayaprakash367" class="social-icon">GH</a>
+                <a href="#" class="social-icon">LI</a>
+                <a href="#" class="social-icon">TW</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <!-- Profile Card with 3D Tilt -->
+            <div class="profile-card" data-tilt>
+                <div class="card-glow"></div>
+                <div class="profile-image-wrapper">
+                    <div class="image-frame">
+                        <img src="profile.new.jpg" alt="Jayaprakash K" class="profile-img">
+                        <div class="frame-corner tl"></div>
+                        <div class="frame-corner tr"></div>
+                        <div class="frame-corner bl"></div>
+                        <div class="frame-corner br"></div>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Available for work</span>
+                    </div>
+                </div>
+                
+                <div class="profile-info">
+                    <h1 class="profile-name">
+                        <span class="name-line">JAYAPRAKASH</span>
+                        <span class="name-line">KUMAR</span>
+                    </h1>
+                    <div class="profile-role">
+                        <div class="role-wrapper">
+                            <span class="role-text typing-role"></span>
+                            <span class="cursor-blink">|</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Areas of Interest -->
+            <div class="interest-section">
+                <h2 class="section-heading">
+                    <span class="heading-number">&lt;01/&gt;</span>
+                    <span class="heading-text">AREAS OF INTEREST</span>
+                </h2>
+                
+                <div class="interest-grid">
+                    <div class="interest-card" data-delay="0">
+                        <div class="card-icon">🧠</div>
+                        <h3>Artificial Intelligence</h3>
+                        <p>Machine Learning, Deep Learning, Neural Networks</p>
+                        <div class="card-shine"></div>
+                    </div>
+                    
+                    <div class="interest-card" data-delay="100">
+                        <div class="card-icon">💻</div>
+                        <h3>Full Stack Development</h3>
+                        <p>React, Node.js, Python, Modern Web Technologies</p>
+                        <div class="card-shine"></div>
+                    </div>
+                    
+                    <div class="interest-card" data-delay="200">
+                        <div class="card-icon">🔐</div>
+                        <h3>Cybersecurity</h3>
+                        <p>Network Security, Privacy Protection, Threat Detection</p>
+                        <div class="card-shine"></div>
+                    </div>
+                    
+                    <div class="interest-card" data-delay="300">
+                        <div class="card-icon">📊</div>
+                        <h3>Data Science</h3>
+                        <p>Analytics, Visualization, Predictive Modeling</p>
+                        <div class="card-shine"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="quick-links">
+                <a href="projects.html" class="magnetic-btn">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">VIEW PROJECTS</span>
+                    <span class="btn-icon">→</span>
+                </a>
+                
+                <a href="skills.html" class="magnetic-btn">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">EXPLORE SKILLS</span>
+                    <span class="btn-icon">→</span>
+                </a>
+            </div>
+            
+            <!-- Contact Section -->
+            <section class="contact-section">
+                <div class="contact-container">
+                    <div class="contact-header">
+                        <h2 class="section-heading">
+                            <span class="heading-number">&lt;02/&gt;</span>
+                            <span class="heading-text">GET IN TOUCH</span>
+                        </h2>
+                        <p class="section-description">Let's connect and discuss opportunities</p>
+                    </div>
+                    
+                    <div class="contact-content">
+                        <!-- Contact Form -->
+                        <div class="contact-form-wrapper">
+                            <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                                <!-- Web3Forms Access Key - Get yours FREE at https://web3forms.com -->
+                                <input type="hidden" name="access_key" value="c23e0f95-5211-49ad-b9b5-a1143dbd8840">
+                                
+                                <!-- Your email where messages will be sent -->
+                                <input type="hidden" name="from_name" value="Portfolio Contact Form">
+                                <input type="hidden" name="subject" value="New Portfolio Contact Message">
+                                
+                                <div class="form-group">
+                                    <label for="name">Your Name</label>
+                                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email">Your Email</label>
+                                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="subject">Subject</label>
+                                    <input type="text" id="subject" name="custom_subject" placeholder="Project Collaboration" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+                                </div>
+                                
+                                <!-- Redirect after submission -->
+                                <input type="hidden" name="redirect" value="thank-you.html">
+                                
+                                <button type="submit" class="submit-btn">
+                                    <span class="btn-text">Send Message</span>
+                                    <span class="btn-icon">
+                                        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                                    </span>
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Contact Info -->
+                        <div class="contact-info-wrapper">
+                            <h3 class="info-heading">Contact Information</h3>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                </div>
+                                <div class="contact-details">
+                                    <h3>Email</h3>
+                                    <p>jayaprakashkumar@example.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                </div>
+                                <div class="contact-details">
+                                    <h3>Phone</h3>
+                                    <p>+91 98765 43210</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                </div>
+                                <div class="contact-details">
+                                    <h3>Location</h3>
+                                    <p>Tamil Nadu, India</p>
+                                </div>
+                            </div>
+                            
+                            <div class="social-links">
+                                <a href="https://github.com/Jayaprakash367" class="social-link" target="_blank" rel="noopener" aria-label="GitHub Profile">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                                </a>
+                                <a href="#" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn Profile">
+                                    <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                                </a>
+                                <a href="#" class="social-link" target="_blank" rel="noopener" aria-label="Twitter Profile">
+                                    <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="floating-element float-1">
+            <div class="float-shape circle"></div>
+        </div>
+        <div class="floating-element float-2">
+            <div class="float-shape triangle"></div>
+        </div>
+        <div class="floating-element float-3">
+            <div class="float-shape square"></div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>&copy; 2025 Jayaprakash K. All rights reserved.</p>
+    </footer>
+    
+    <script src="main.js"></script>
+</body>
+</html>

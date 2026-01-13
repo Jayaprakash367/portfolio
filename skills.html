@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills - Jayaprakash K</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="skills-page">
+    <!-- Liquid Cursor -->
+    <div class="liquid-cursor"></div>
+    <canvas id="cursor-trail"></canvas>
+    
+    <!-- Particle Field -->
+    <canvas id="particle-field"></canvas>
+    
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-content">
+            <div class="loader-text">LOADING SKILLS</div>
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <a href="index.html"><span class="brand-text">JAYAPRAKASH</span></a>
+            <div class="brand-dot"></div>
+        </div>
+        <div class="nav-menu-btn">
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    
+    <!-- Full Screen Menu -->
+    <div class="fullscreen-menu">
+        <div class="menu-bg"></div>
+        <div class="menu-content">
+            <a href="index.html" class="menu-link" data-text="Home">
+                <span class="link-number">01</span>
+                <span class="link-text">Home</span>
+            </a>
+            <a href="projects.html" class="menu-link" data-text="Projects">
+                <span class="link-number">02</span>
+                <span class="link-text">Projects</span>
+            </a>
+            <a href="skills.html" class="menu-link active" data-text="Skills">
+                <span class="link-number">03</span>
+                <span class="link-text">Skills</span>
+            </a>
+            <a href="education.html" class="menu-link" data-text="Education">
+                <span class="link-number">04</span>
+                <span class="link-text">Education</span>
+            </a>
+        </div>
+        <div class="menu-footer">
+            <div class="menu-socials">
+                <a href="https://github.com/Jayaprakash367" class="social-icon" rel="noopener" target="_blank">GH</a>
+                <a href="#" class="social-icon">LI</a>
+                <a href="#" class="social-icon">TW</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Skills Section -->
+    <section class="skills-section">
+        <div class="page-header">
+            <h1 class="page-title">
+                <span class="title-line">TECHNICAL</span>
+                <span class="title-line">EXPERTISE</span>
+            </h1>
+            <p class="page-subtitle">My technical toolkit and proficiency levels</p>
+        </div>
+        
+        <div class="skills-container">
+            <!-- Frontend Skills -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h2 class="category-title">Frontend Development</h2>
+                    <div class="category-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 2.18l8 3.64v8.18c0 4.84-3.16 9.39-8 10.8-4.84-1.41-8-5.96-8-10.8V7.82l8-3.64zM11 7v2H9v2h2v2h2v-2h2V9h-2V7h-2z"/></svg>
+                    </div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-item" data-level="90">
+                        <div class="skill-info">
+                            <span class="skill-name">HTML5</span>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="85">
+                        <div class="skill-info">
+                            <span class="skill-name">CSS3 / SCSS</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="80">
+                        <div class="skill-info">
+                            <span class="skill-name">JavaScript</span>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="75">
+                        <div class="skill-info">
+                            <span class="skill-name">React</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Backend Skills -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h2 class="category-title">Backend Development</h2>
+                    <div class="category-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1m0 8h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1m0 8h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1M9 5h1V3H9v2m0 8h1v-2H9v2m0 8h1v-2H9v2M5 3v2h2V3H5m0 8v2h2v-2H5m0 8v2h2v-2H5z"/></svg>
+                    </div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-item" data-level="85">
+                        <div class="skill-info">
+                            <span class="skill-name">Python</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="80">
+                        <div class="skill-info">
+                            <span class="skill-name">Node.js</span>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="75">
+                        <div class="skill-info">
+                            <span class="skill-name">Flask / Django</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="70">
+                        <div class="skill-info">
+                            <span class="skill-name">MySQL / MongoDB</span>
+                            <span class="skill-percentage">70%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI/ML Skills -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h2 class="category-title">AI & Machine Learning</h2>
+                    <div class="category-icon">
+                        <svg viewBox="0 0 24 24"><path d="M13 13v5l3 1.5V19l2.5 1L17 18.5 15.5 19V16h-1l-2 2 1.5.5-1.5.5-2-2 2-4m6 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2M9 11a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2m12 0c0 5.52-4.48 10-10 10S1 16.52 1 11 5.48 1 11 1s10 4.48 10 10z"/></svg>
+                    </div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-item" data-level="80">
+                        <div class="skill-info">
+                            <span class="skill-name">TensorFlow / PyTorch</span>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="85">
+                        <div class="skill-info">
+                            <span class="skill-name">Scikit-learn</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="75">
+                        <div class="skill-info">
+                            <span class="skill-name">OpenCV</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="80">
+                        <div class="skill-info">
+                            <span class="skill-name">NLP / LLMs</span>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Design Skills -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h2 class="category-title">Design & Tools</h2>
+                    <div class="category-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2m5.5 10h-11l5.5 9 5.5-9M3 13.5l4 4L3 21.5v-8m18 0v8l-4-4 4-4z"/></svg>
+                    </div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-item" data-level="70">
+                        <div class="skill-info">
+                            <span class="skill-name">Figma / UI Design</span>
+                            <span class="skill-percentage">70%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="85">
+                        <div class="skill-info">
+                            <span class="skill-name">Git / GitHub</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="75">
+                        <div class="skill-info">
+                            <span class="skill-name">Docker</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="70">
+                        <div class="skill-info">
+                            <span class="skill-name">Linux / Command Line</span>
+                            <span class="skill-percentage">70%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cybersecurity Skills -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h2 class="category-title">Cybersecurity</h2>
+                    <div class="category-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m0 6a1.5 1.5 0 0 1 1.5 1.5 1.5 1.5 0 0 1-1.5 1.5 1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 7m0 4c2.21 0 4 1.79 4 4v2H8v-2c0-2.21 1.79-4 4-4z"/></svg>
+                    </div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-item" data-level="75">
+                        <div class="skill-info">
+                            <span class="skill-name">Network Security</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="70">
+                        <div class="skill-info">
+                            <span class="skill-name">Penetration Testing</span>
+                            <span class="skill-percentage">70%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="80">
+                        <div class="skill-info">
+                            <span class="skill-name">Cryptography</span>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-level="75">
+                        <div class="skill-info">
+                            <span class="skill-name">Threat Detection</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>&copy; 2025 Jayaprakash K. All rights reserved.</p>
+    </footer>
+    
+    <script src="main.js"></script>
+</body>
+</html>
