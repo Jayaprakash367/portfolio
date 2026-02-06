@@ -3,171 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You - Message Sent!</title>
+    <title>Thank You — JAYAPRAKASH K</title>
+    <link rel="stylesheet" href="main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .success-container {
-            text-align: center;
-            max-width: 600px;
-            padding: 3rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            animation: fadeInUp 0.6s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .check-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 2rem;
-            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: scaleIn 0.5s ease 0.3s both;
-        }
-
-        @keyframes scaleIn {
-            from {
-                transform: scale(0);
-            }
-            to {
-                transform: scale(1);
-            }
-        }
-
-        .check-icon svg {
-            width: 50px;
-            height: 50px;
-            stroke: #0a0a0a;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        p {
-            font-size: 1.1rem;
-            color: #b0b0b0;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-
-        .back-btn {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-            color: #0a0a0a;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
-        }
-
-        .timer {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        @media (max-width: 768px) {
-            .success-container {
-                padding: 2rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            p {
-                font-size: 1rem;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="success-container">
-        <div class="check-icon">
-            <svg viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+    <canvas id="shader-bg"></canvas>
+    <canvas id="particle-canvas"></canvas>
+    <canvas id="trail-canvas"></canvas>
+    <div id="geo-container" class="geo-container"></div>
+    <div id="wave-container" class="wave-container"></div>
+    <div class="morph-blobs">
+        <div class="morph-blob blob-1"></div>
+        <div class="morph-blob blob-2"></div>
+        <div class="morph-blob blob-3"></div>
+    </div>
+    <div class="noise-overlay"></div>
+
+    <nav class="nav-glass" id="mainNav">
+        <a href="index.html" class="nav-logo">
+            <span class="logo-letter" data-letter="J">J</span>
+            <span class="logo-letter" data-letter="P">P</span>
+            <span class="logo-dot"></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link" data-text="Home">Home</a>
+            <a href="projects.html" class="nav-link" data-text="Projects">Projects</a>
+            <a href="skills.html" class="nav-link" data-text="Skills">Skills</a>
+            <a href="education.html" class="nav-link" data-text="Education">Education</a>
         </div>
-        
-        <h1>Message Sent Successfully!</h1>
-        
-        <p>Thank you for reaching out! Your message has been delivered to my inbox. I'll get back to you as soon as possible.</p>
-        
-        <a href="index.html" class="back-btn">Back to Portfolio</a>
-        
-        <div class="timer">
-            Redirecting in <span id="countdown">5</span> seconds...
+        <button class="nav-menu-toggle" id="menuToggle" aria-label="Menu">
+            <div class="toggle-line"></div><div class="toggle-line"></div><div class="toggle-line"></div>
+        </button>
+    </nav>
+
+    <div class="dimensional-menu" id="dimensionalMenu">
+        <div class="menu-dimension-bg"><div class="dimension-layer"></div><div class="dimension-layer"></div><div class="dimension-layer"></div></div>
+        <div class="menu-items">
+            <a href="index.html" class="dimension-link"><span class="dim-number">01</span><span class="dim-text" data-text="HOME">HOME</span><span class="dim-line"></span></a>
+            <a href="projects.html" class="dimension-link"><span class="dim-number">02</span><span class="dim-text" data-text="PROJECTS">PROJECTS</span><span class="dim-line"></span></a>
+            <a href="skills.html" class="dimension-link"><span class="dim-number">03</span><span class="dim-text" data-text="SKILLS">SKILLS</span><span class="dim-line"></span></a>
+            <a href="education.html" class="dimension-link"><span class="dim-number">04</span><span class="dim-text" data-text="EDUCATION">EDUCATION</span><span class="dim-line"></span></a>
+        </div>
+        <div class="menu-footer-info">
+            <div class="menu-socials-row"><a href="https://github.com/Jayaprakash367" target="_blank" rel="noopener">GITHUB</a><a href="#">LINKEDIN</a><a href="#">TWITTER</a></div>
+            <p class="menu-copyright">&copy; 2025 — JAYAPRAKASH K</p>
         </div>
     </div>
 
-    <script>
-        // Countdown timer
-        let seconds = 5;
-        const countdownEl = document.getElementById('countdown');
-        
-        const timer = setInterval(() => {
-            seconds--;
-            countdownEl.textContent = seconds;
-            
-            if (seconds <= 0) {
-                clearInterval(timer);
-                window.location.href = 'index.html';
-            }
-        }, 1000);
-    </script>
+    <!-- Thank You Content -->
+    <section class="thankyou-section">
+        <div class="thankyou-content">
+            <div class="thankyou-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1 class="thankyou-title">MESSAGE SENT</h1>
+            <p class="thankyou-text">Thank you for reaching out! I've received your message and will get back to you as soon as possible. In the meantime, feel free to explore more of my work.</p>
+            <div class="hero-cta" style="justify-content: center; opacity: 1;">
+                <a href="index.html" class="liquid-btn primary" data-magnetic>
+                    <span class="btn-fill"></span>
+                    <span class="btn-text">BACK HOME</span>
+                    <span class="btn-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                </a>
+                <a href="projects.html" class="liquid-btn secondary" data-magnetic>
+                    <span class="btn-fill"></span>
+                    <span class="btn-text">VIEW PROJECTS</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
 </body>
 </html>
