@@ -28,5 +28,29 @@
     "description": "Machine learning project for detecting fraudulent credit card transactions.",
     "image": "https://raw.githubusercontent.com/Jayaprakash367/Credit_Card_Fraud_Detection/main/preview.png",
     "link": "https://github.com/Jayaprakash367/Credit_Card_Fraud_Detection"
+  },
+  "Jayaprakash367/AI-Career-Path-Recommender": {
+    "title": "AI Career Path Recommender",
+    "description": "A web-based platform that uses AI and Machine Learning to suggest suitable career paths based on a user's interests, skills, and academic data.",
+    "image": "https://opengraph.githubassets.com/1/Jayaprakash367/AI-Career-Path-Recommender",
+    "link": "https://github.com/Jayaprakash367/AI-Career-Path-Recommender"
+  },
+  "Jayaprakash367/Movies": {
+    "title": "TrailerFlix — Movie Trailer OTT",
+    "description": "A Netflix-style web platform for watching movie trailers with backend API integration.",
+    "image": "https://opengraph.githubassets.com/1/Jayaprakash367/Movies",
+    "link": "https://movies-iota-woad.vercel.app"
+  },
+  "Jayaprakash367/Wallpaper-Website": {
+    "title": "WallVault — Wallpaper Website",
+    "description": "A curated wallpaper gallery website with high-resolution imagery and download functionality.",
+    "image": "https://opengraph.githubassets.com/1/Jayaprakash367/Wallpaper-Website",
+    "link": "https://github.com/Jayaprakash367/Wallpaper-Website"
+  },
+  "Jayaprakash367/code-debug-competition": {
+    "title": "Code Debug Competition",
+    "description": "An interactive code debugging competition platform with real-time challenges and scoring.",
+    "image": "https://opengraph.githubassets.com/1/Jayaprakash367/code-debug-competition",
+    "link": "https://code-debug-competition.vercel.app"
   }
 }

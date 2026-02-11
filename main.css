@@ -105,40 +105,41 @@ img { max-width: 100%; display: block; }
 ::selection { background: rgba(99, 102, 241, 0.4); color: #fff; }
 
 /* ========================================
-   III. VISUAL LAYER CANVASES
+   III. CSS AURA BACKGROUND (Lightweight)
    ======================================== */
-#shader-bg {
+.aura-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0.6;
+    pointer-events: none;
+    background: 
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 80% 85%, rgba(236, 72, 153, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 70% at 60% 40%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(6, 182, 212, 0.10) 0%, transparent 55%);
+    animation: auraShift 25s ease-in-out infinite alternate;
 }
 
-#particle-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-}
-
-#trail-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 99998;
-    pointer-events: none;
+@keyframes auraShift {
+    0% {
+        background-position: 0% 0%, 100% 100%, 50% 50%, 0% 100%;
+        opacity: 1;
+    }
+    50% {
+        background-position: 10% 5%, 90% 90%, 40% 60%, 15% 85%;
+        opacity: 0.85;
+    }
+    100% {
+        background-position: 5% 10%, 95% 80%, 55% 45%, 5% 90%;
+        opacity: 1;
+    }
 }
 
 /* ========================================
-   IV. MORPHING GRADIENT BLOBS
+   IV. MORPHING GRADIENT BLOBS (Optimized)
    ======================================== */
 .morph-blobs {
     position: fixed;
@@ -154,14 +155,15 @@ img { max-width: 100%; display: block; }
 .morph-blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.12;
-    animation: blobMorph 20s ease-in-out infinite;
+    filter: blur(40px);
+    opacity: 0.08;
+    will-change: transform, border-radius;
+    animation: blobMorph 30s ease-in-out infinite;
 }
 
 .blob-1 {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     background: var(--aura-primary);
     top: -10%;
     left: -5%;
@@ -169,21 +171,21 @@ img { max-width: 100%; display: block; }
 }
 
 .blob-2 {
-    width: 400px;
-    height: 400px;
+    width: 320px;
+    height: 320px;
     background: var(--aura-pink);
     top: 50%;
     right: -8%;
-    animation-delay: -7s;
+    animation-delay: -10s;
 }
 
 .blob-3 {
-    width: 350px;
-    height: 350px;
+    width: 280px;
+    height: 280px;
     background: var(--aura-cyan);
     bottom: -5%;
     left: 30%;
-    animation-delay: -14s;
+    animation-delay: -20s;
 }
 
 @keyframes blobMorph {
@@ -206,87 +208,18 @@ img { max-width: 100%; display: block; }
 }
 
 /* ========================================
-   V. FLOATING GEOMETRY
-   ======================================== */
-.geo-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.floating-geo {
-    position: absolute;
-    transition: transform 0.3s ease-out;
-}
-
-@keyframes geoFloat {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    25% { transform: translateY(-20px) translateX(10px); }
-    50% { transform: translateY(-5px) translateX(-15px); }
-    75% { transform: translateY(-30px) translateX(5px); }
-}
-
-@keyframes geoSpin {
-    to { transform: rotate(360deg); }
-}
-
-/* ========================================
-   VI. AMBIENT WAVES
-   ======================================== */
-.wave-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.ambient-wave {
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    top: -50%;
-    left: -50%;
-    background: radial-gradient(ellipse at center, var(--aura-primary), transparent 70%);
-    animation: waveFloat 12s ease-in-out infinite;
-}
-
-@keyframes waveFloat {
-    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-    33% { transform: translate(30px, -20px) rotate(3deg) scale(1.05); }
-    66% { transform: translate(-20px, 15px) rotate(-2deg) scale(0.97); }
-}
-
-/* ========================================
-   VII. NOISE OVERLAY
+   VII. NOISE OVERLAY (Static — no animation)
    ======================================== */
 .noise-overlay {
     position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 2;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    opacity: 0.35;
-    animation: noiseShift 0.3s steps(8) infinite;
-}
-
-@keyframes noiseShift {
-    0% { transform: translate(0, 0); }
-    25% { transform: translate(-5%, -12%); }
-    50% { transform: translate(8%, -5%); }
-    75% { transform: translate(-12%, 8%); }
-    100% { transform: translate(0, 0); }
+    opacity: 0.25;
 }
 
 /* ========================================
@@ -874,6 +807,7 @@ img { max-width: 100%; display: block; }
     transform: translateY(20px);
     animation: fadeUp 0.8s var(--ease-out-expo) 1.5s forwards;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .badge-dot {
@@ -1281,53 +1215,6 @@ img { max-width: 100%; display: block; }
         repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(99,102,241,0.015) 2px, rgba(99,102,241,0.015) 4px);
     pointer-events: none;
     z-index: 0;
-}
-
-/* Scroll Indicator */
-.scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    opacity: 0;
-    animation: fadeUp 0.8s var(--ease-out-expo) 3.2s forwards;
-}
-
-.scroll-mouse {
-    width: 24px;
-    height: 40px;
-    border: 2px solid rgba(255,255,255,0.15);
-    border-radius: 12px;
-    position: relative;
-}
-
-.scroll-wheel {
-    width: 3px;
-    height: 8px;
-    background: var(--aura-primary);
-    border-radius: 2px;
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: scrollBounce 2s ease-in-out infinite;
-    box-shadow: 0 0 8px rgba(99,102,241,0.4);
-}
-
-@keyframes scrollBounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-    50% { transform: translateX(-50%) translateY(12px); opacity: 0; }
-}
-
-.scroll-indicator span {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    color: var(--text-muted);
 }
 
 /* ========================================
