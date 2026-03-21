@@ -60,43 +60,6 @@ class ClickRipple {
 }
 
 // ═══════════════════════════════════════════
-// VII. DNA HELIX LOADER
-// ═══════════════════════════════════════════
-class CinematicLoader {
-    constructor() {
-        this.loader = document.getElementById('loader');
-        this.progressBar = document.querySelector('.loader-progress-bar');
-        this.percentText = document.querySelector('.loader-percent');
-        if (!this.loader) return;
-        this.progress = 0;
-        this.init();
-    }
-
-    init() {
-        document.body.style.overflow = 'hidden';
-
-        const interval = setInterval(() => {
-            this.progress += Math.random() * 12 + 3;
-            if (this.progress >= 100) {
-                this.progress = 100;
-                clearInterval(interval);
-                setTimeout(() => this.hide(), 600);
-            }
-            if (this.progressBar) this.progressBar.style.width = this.progress + '%';
-            if (this.percentText) this.percentText.textContent = Math.floor(this.progress) + '%';
-        }, 120);
-    }
-
-    hide() {
-        this.loader.classList.add('loaded');
-        document.body.style.overflow = '';
-        setTimeout(() => {
-            this.loader.style.display = 'none';
-        }, 1500);
-    }
-}
-
-// ═══════════════════════════════════════════
 // VIII. NAVIGATION
 // ═══════════════════════════════════════════
 class Navigation {
@@ -588,13 +551,563 @@ class SectionWipe {
 }
 
 // ═══════════════════════════════════════════
-// XXV. INITIALIZE THE AURA ENGINE
+// XXV. BUBBLE POP GAME - PROFESSIONAL EDITION
+// ═══════════════════════════════════════════
+class BubblePopGame {
+    constructor() {
+        this.trigger = document.getElementById('gameTrigger');
+        this.game = document.getElementById('bubbleGame');
+        this.arena = document.getElementById('gameArena');
+        this.overlay = document.getElementById('gameOverlay');
+        this.startBtn = document.getElementById('gameStartBtn');
+        this.closeBtn = document.getElementById('gameClose');
+        this.exitBtn = document.getElementById('gameExitBtn');
+        this.scoreDisplay = document.getElementById('gameScore');
+        this.timerDisplay = document.getElementById('gameTimer');
+        this.finalScoreDisplay = document.getElementById('finalScore');
+        
+        if (!this.trigger || !this.game) return;
+        
+        this.score = 0;
+        this.timeLeft = 30;
+        this.isPlaying = false;
+        this.bubbleInterval = null;
+        this.timerInterval = null;
+        this.bubbles = new Set();
+        this.combo = 0;
+        this.lastPopTime = 0;
+        this.highScore = parseInt(localStorage.getItem('bubbleHighScore') || '0');
+        this.difficulty = 1;
+        this.spawnRate = 700;
+        
+        // Audio context for sound effects
+        this.audioCtx = null;
+        
+        this.init();
+    }
+    
+    init() {
+        // Initialize audio on first interaction
+        const initAudio = () => {
+            if (!this.audioCtx) {
+                this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            document.removeEventListener('pointerdown', initAudio);
+        };
+        document.addEventListener('pointerdown', initAudio, { once: true });
+        
+        // Use Pointer Events API for unified touch/mouse handling
+        this.trigger.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            this.openGame();
+        });
+        
+        this.closeBtn.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            this.closeGame();
+        });
+        
+        this.startBtn.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            this.startGame();
+        });
+        
+        // Exit button - close game and return to page
+        if (this.exitBtn) {
+            this.exitBtn.addEventListener('pointerdown', (e) => {
+                e.preventDefault();
+                this.closeGame();
+            });
+        }
+        
+        // Prevent context menu and text selection in game area
+        this.game.addEventListener('contextmenu', e => e.preventDefault());
+        this.game.addEventListener('selectstart', e => e.preventDefault());
+        
+        // Handle touch events for better mobile experience
+        this.game.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+        
+        // Escape key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.game.classList.contains('active')) {
+                this.closeGame();
+            }
+        });
+        
+        // Handle pointerdown on arena for bubble popping
+        this.arena.addEventListener('pointerdown', (e) => this.handleArenaPointer(e), { passive: false });
+    }
+    
+    handleArenaPointer(e) {
+        if (!this.isPlaying) return;
+        
+        const target = e.target;
+        if (target.classList.contains('game-bubble') && !target.classList.contains('popped')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const points = parseInt(target.dataset.points) || 1;
+            this.popBubble(e, target, points);
+        }
+    }
+    
+    playPopSound(frequency = 800) {
+        if (!this.audioCtx) return;
+        
+        try {
+            const osc = this.audioCtx.createOscillator();
+            const gain = this.audioCtx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(this.audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(frequency, this.audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(frequency * 1.5, this.audioCtx.currentTime + 0.05);
+            osc.frequency.exponentialRampToValueAtTime(frequency * 0.5, this.audioCtx.currentTime + 0.1);
+            
+            gain.gain.setValueAtTime(0.15, this.audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.15);
+            
+            osc.type = 'sine';
+            osc.start(this.audioCtx.currentTime);
+            osc.stop(this.audioCtx.currentTime + 0.15);
+        } catch (e) {
+            // Audio not supported
+        }
+    }
+    
+    vibrate(pattern = 10) {
+        if ('vibrate' in navigator) {
+            navigator.vibrate(pattern);
+        }
+    }
+    
+    openGame() {
+        this.game.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        this.resetGame();
+    }
+    
+    closeGame() {
+        this.game.classList.remove('active');
+        document.body.style.overflow = '';
+        this.stopGame();
+    }
+    
+    resetGame() {
+        this.score = 0;
+        this.timeLeft = 30;
+        this.combo = 0;
+        this.difficulty = 1;
+        this.spawnRate = 700;
+        this.scoreDisplay.textContent = '0';
+        this.timerDisplay.textContent = '30';
+        this.overlay.classList.remove('hidden');
+        this.startBtn.textContent = 'START GAME';
+        // Hide exit button on initial open, show only after game ends
+        if (this.exitBtn) this.exitBtn.style.display = 'none';
+        const finalScoreEl = document.querySelector('.game-final-score');
+        if (finalScoreEl) finalScoreEl.classList.remove('show');
+        this.clearBubbles();
+        
+        // Update high score display if exists
+        const highScoreEl = document.getElementById('highScore');
+        if (highScoreEl) highScoreEl.textContent = this.highScore;
+    }
+    
+    startGame() {
+        this.isPlaying = true;
+        this.score = 0;
+        this.timeLeft = 30;
+        this.combo = 0;
+        this.difficulty = 1;
+        this.spawnRate = 700;
+        this.lastPopTime = Date.now();
+        this.scoreDisplay.textContent = '0';
+        this.timerDisplay.textContent = '30';
+        this.overlay.classList.add('hidden');
+        this.clearBubbles();
+        
+        // Spawn initial bubbles faster
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => this.spawnBubble(), i * 200);
+        }
+        
+        // Dynamic spawn rate
+        this.scheduleNextSpawn();
+        
+        // Timer with urgency effects
+        this.timerInterval = setInterval(() => {
+            this.timeLeft--;
+            this.timerDisplay.textContent = this.timeLeft;
+            
+            // Urgency visual when low time
+            if (this.timeLeft <= 10) {
+                this.timerDisplay.classList.add('urgent');
+                if (this.timeLeft <= 5) {
+                    this.timerDisplay.classList.add('critical');
+                }
+            }
+            
+            // Increase difficulty over time
+            if (this.timeLeft === 20) {
+                this.difficulty = 1.3;
+                this.spawnRate = 550;
+            } else if (this.timeLeft === 10) {
+                this.difficulty = 1.6;
+                this.spawnRate = 400;
+            }
+            
+            if (this.timeLeft <= 0) {
+                this.endGame();
+            }
+        }, 1000);
+    }
+    
+    scheduleNextSpawn() {
+        if (!this.isPlaying) return;
+        
+        this.bubbleInterval = setTimeout(() => {
+            this.spawnBubble();
+            this.scheduleNextSpawn();
+        }, this.spawnRate + Math.random() * 200);
+    }
+    
+    stopGame() {
+        this.isPlaying = false;
+        if (this.bubbleInterval) {
+            clearTimeout(this.bubbleInterval);
+            this.bubbleInterval = null;
+        }
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        this.timerDisplay.classList.remove('urgent', 'critical');
+        this.clearBubbles();
+    }
+    
+    endGame() {
+        this.stopGame();
+        this.finalScoreDisplay.textContent = this.score;
+        const finalScoreEl = document.querySelector('.game-final-score');
+        if (finalScoreEl) finalScoreEl.classList.add('show');
+        this.overlay.classList.remove('hidden');
+        this.startBtn.textContent = 'PLAY AGAIN';
+        // Show exit button after game ends
+        if (this.exitBtn) this.exitBtn.style.display = 'block';
+        
+        // Save high score
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+            localStorage.setItem('bubbleHighScore', this.highScore.toString());
+            this.celebrateNewRecord();
+        } else if (this.score >= 30) {
+            this.celebrate();
+        }
+    }
+    
+    spawnBubble() {
+        if (!this.isPlaying || !this.arena) return;
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'game-bubble';
+        
+        // Random size with weighted distribution (more medium-sized)
+        const sizeRand = Math.random();
+        let size;
+        if (sizeRand < 0.2) {
+            size = 45 + Math.random() * 15; // Small (harder, more points)
+        } else if (sizeRand < 0.7) {
+            size = 60 + Math.random() * 20; // Medium
+        } else {
+            size = 80 + Math.random() * 25; // Large (easier, fewer points)
+        }
+        
+        bubble.style.setProperty('--size', size + 'px');
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        
+        // Random horizontal position with safe margins
+        const margin = size / 2 + 10;
+        const maxX = Math.max(margin, this.arena.offsetWidth - size - margin);
+        const posX = Math.random() * (maxX - margin) + margin;
+        bubble.style.left = posX + 'px';
+        
+        // Start position below arena
+        const arenaHeight = this.arena.offsetHeight;
+        bubble.style.bottom = '-' + (size + 20) + 'px';
+        
+        // Speed based on size and difficulty (smaller = faster)
+        const baseSpeed = 4.5 - (size / 40);
+        const duration = Math.max(2.5, baseSpeed / this.difficulty);
+        
+        // Assign bubble type and color
+        const types = ['normal', 'golden', 'rainbow'];
+        const typeRand = Math.random();
+        let bubbleType = 'normal';
+        if (typeRand > 0.95) {
+            bubbleType = 'rainbow';
+        } else if (typeRand > 0.85) {
+            bubbleType = 'golden';
+        }
+        bubble.dataset.type = bubbleType;
+        bubble.classList.add('bubble-' + bubbleType);
+        
+        // Calculate points
+        let points = Math.ceil((105 - size) / 15);
+        if (bubbleType === 'golden') points *= 3;
+        if (bubbleType === 'rainbow') points *= 5;
+        
+        bubble.dataset.points = points;
+        bubble.dataset.size = size;
+        
+        // Set touch-action for better mobile handling
+        bubble.style.touchAction = 'none';
+        
+        this.arena.appendChild(bubble);
+        this.bubbles.add(bubble);
+        
+        // Animate with requestAnimationFrame for smoother motion
+        const startTime = performance.now();
+        const startY = -size - 20;
+        const endY = arenaHeight + size + 50;
+        const wobbleAmount = 15 + Math.random() * 15;
+        const wobbleSpeed = 2 + Math.random() * 2;
+        
+        const animate = (currentTime) => {
+            if (!this.isPlaying || !bubble.parentNode || bubble.classList.contains('popped')) {
+                return;
+            }
+            
+            const elapsed = (currentTime - startTime) / 1000;
+            const progress = elapsed / duration;
+            
+            if (progress >= 1) {
+                this.removeBubble(bubble);
+                return;
+            }
+            
+            // Smooth rise with sine wave wobble
+            const currentY = startY + (endY - startY) * progress;
+            const wobbleX = Math.sin(elapsed * wobbleSpeed) * wobbleAmount;
+            const rotate = Math.sin(elapsed * 1.5) * 10;
+            const scale = 1 + Math.sin(elapsed * 3) * 0.05;
+            
+            bubble.style.transform = `translate(${wobbleX}px, ${-currentY}px) rotate(${rotate}deg) scale(${scale})`;
+            
+            bubble._animationId = requestAnimationFrame(animate);
+        };
+        
+        bubble._animationId = requestAnimationFrame(animate);
+        bubble._startTime = startTime;
+        bubble._duration = duration;
+    }
+    
+    popBubble(e, bubble, points) {
+        if (!bubble || bubble.classList.contains('popped') || !this.isPlaying) return;
+        
+        // Mark as popped immediately to prevent double-taps
+        bubble.classList.add('popped');
+        
+        // Cancel animation
+        if (bubble._animationId) {
+            cancelAnimationFrame(bubble._animationId);
+        }
+        
+        // Calculate combo
+        const now = Date.now();
+        if (now - this.lastPopTime < 800) {
+            this.combo = Math.min(this.combo + 1, 10);
+        } else {
+            this.combo = 1;
+        }
+        this.lastPopTime = now;
+        
+        // Apply combo multiplier
+        const comboMultiplier = 1 + (this.combo - 1) * 0.2;
+        const finalPoints = Math.round(points * comboMultiplier);
+        
+        this.score += finalPoints;
+        this.scoreDisplay.textContent = this.score;
+        
+        // Visual feedback
+        this.scoreDisplay.classList.add('score-pop');
+        setTimeout(() => this.scoreDisplay.classList.remove('score-pop'), 200);
+        
+        // Get bubble position for effects
+        const rect = bubble.getBoundingClientRect();
+        const arenaRect = this.arena.getBoundingClientRect();
+        const x = rect.left + rect.width / 2 - arenaRect.left;
+        const y = rect.top + rect.height / 2 - arenaRect.top;
+        
+        // Sound and haptic feedback
+        const freq = 600 + (points * 50) + (this.combo * 100);
+        this.playPopSound(freq);
+        this.vibrate(this.combo > 3 ? [10, 10, 10] : 8);
+        
+        // Show score popup
+        this.showScorePopup(x, y, finalPoints, this.combo);
+        
+        // Create pop effect
+        const bubbleType = bubble.dataset.type;
+        this.createPopEffect(x, y, bubbleType, parseInt(bubble.dataset.size) || 70);
+        
+        // Pop animation
+        bubble.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
+        bubble.style.transform += ' scale(1.4)';
+        bubble.style.opacity = '0';
+        
+        // Remove bubble
+        setTimeout(() => this.removeBubble(bubble), 200);
+    }
+    
+    showScorePopup(x, y, points, combo) {
+        const popup = document.createElement('div');
+        popup.className = 'pop-score';
+        if (combo > 1) {
+            popup.innerHTML = `+${points}<span class="combo-text">x${combo}</span>`;
+            popup.classList.add('combo-' + Math.min(combo, 5));
+        } else {
+            popup.textContent = '+' + points;
+        }
+        popup.style.left = x + 'px';
+        popup.style.top = y + 'px';
+        
+        this.arena.appendChild(popup);
+        
+        // Animate using CSS
+        requestAnimationFrame(() => {
+            popup.classList.add('animate');
+        });
+        
+        setTimeout(() => {
+            if (popup.parentNode) popup.remove();
+        }, 800);
+    }
+    
+    createPopEffect(x, y, type = 'normal', size = 70) {
+        const particleCount = type === 'rainbow' ? 16 : type === 'golden' ? 12 : 8;
+        const colors = {
+            normal: ['#00d4ff', '#14b8a6', '#06b6d4', '#22d3ee'],
+            golden: ['#ffd700', '#ffb700', '#ffa500', '#fff4b8'],
+            rainbow: ['#ff0080', '#ff8c00', '#ffef00', '#00ff00', '#00bfff', '#8b00ff']
+        };
+        
+        const particleColors = colors[type] || colors.normal;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'pop-particle';
+            
+            const angle = (i / particleCount) * Math.PI * 2;
+            const velocity = 30 + Math.random() * (size * 0.5);
+            const tx = Math.cos(angle) * velocity;
+            const ty = Math.sin(angle) * velocity;
+            const particleSize = 4 + Math.random() * 6;
+            
+            particle.style.cssText = `
+                left: ${x}px;
+                top: ${y}px;
+                width: ${particleSize}px;
+                height: ${particleSize}px;
+                background: ${particleColors[i % particleColors.length]};
+                --tx: ${tx}px;
+                --ty: ${ty}px;
+                --rotate: ${Math.random() * 720}deg;
+            `;
+            
+            this.arena.appendChild(particle);
+            
+            // Trigger animation
+            requestAnimationFrame(() => particle.classList.add('animate'));
+            
+            setTimeout(() => {
+                if (particle.parentNode) particle.remove();
+            }, 500);
+        }
+        
+        // Ring effect for special bubbles
+        if (type !== 'normal') {
+            const ring = document.createElement('div');
+            ring.className = 'pop-ring pop-ring-' + type;
+            ring.style.left = x + 'px';
+            ring.style.top = y + 'px';
+            this.arena.appendChild(ring);
+            
+            setTimeout(() => {
+                if (ring.parentNode) ring.remove();
+            }, 500);
+        }
+    }
+    
+    celebrate() {
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                if (!this.arena?.parentNode) return;
+                
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    --hue: ${Math.random() * 360};
+                    --delay: ${Math.random() * 0.5}s;
+                    --duration: ${2 + Math.random()}s;
+                    --drift: ${(Math.random() - 0.5) * 100}px;
+                `;
+                
+                this.arena.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }, i * 60);
+        }
+    }
+    
+    celebrateNewRecord() {
+        // Extra celebration for new high score
+        this.celebrate();
+        
+        const banner = document.createElement('div');
+        banner.className = 'new-record-banner';
+        banner.innerHTML = `<span>🏆 NEW HIGH SCORE! 🏆</span>`;
+        this.overlay.querySelector('.game-message').prepend(banner);
+        
+        // Vibrate pattern for celebration
+        this.vibrate([100, 50, 100, 50, 200]);
+        
+        setTimeout(() => banner.remove(), 5000);
+    }
+    
+    removeBubble(bubble) {
+        this.bubbles.delete(bubble);
+        if (bubble._animationId) {
+            cancelAnimationFrame(bubble._animationId);
+        }
+        if (bubble.parentNode) {
+            bubble.remove();
+        }
+    }
+    
+    clearBubbles() {
+        this.bubbles.forEach(bubble => {
+            if (bubble._animationId) {
+                cancelAnimationFrame(bubble._animationId);
+            }
+            if (bubble.parentNode) bubble.remove();
+        });
+        this.bubbles.clear();
+        
+        if (this.arena) {
+            const elements = this.arena.querySelectorAll('.game-bubble, .pop-score, .pop-particle, .pop-ring, .confetti');
+            elements.forEach(el => el.remove());
+        }
+    }
+}
+
+// ═══════════════════════════════════════════
+// XXVI. INITIALIZE THE AURA ENGINE
 // ═══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-    document.body.style.overflow = 'hidden';
-
     // ── Core Systems ──
-    new CinematicLoader();
     new Navigation();
     new ScrollProgress();
 
@@ -620,9 +1133,12 @@ document.addEventListener('DOMContentLoaded', () => {
     new CounterAnimation();
     new SkillBarAnimator();
     new FormHandler();
+    
+    // ── Fun Game ──
+    new BubblePopGame();
 
-    console.log('%c✦ THE AURA ENGINE v6.0 — JAYAPRAKASH K (Performance Optimized)', 
-        'background: linear-gradient(135deg, #6366f1, #ec4899); color: white; padding: 12px 24px; font-size: 14px; font-weight: bold; border-radius: 8px;');
-    console.log('%c"No one in the world can replicate this."', 
-        'color: #8b5cf6; font-style: italic; padding: 4px;');
+    console.log('%c✦ AQUA FLOW ENGINE v6.0 — JAYAPRAKASH K', 
+        'background: linear-gradient(135deg, #00d4ff, #14b8a6); color: #0a1628; padding: 12px 24px; font-size: 14px; font-weight: bold; border-radius: 8px;');
+    console.log('%c"Dive into the experience."', 
+        'color: #00d4ff; font-style: italic; padding: 4px;');
 });

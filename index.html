@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5">
+    <meta name="theme-color" content="#0a1628">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>JAYAPRAKASH K — Digital Architect</title>
     <link rel="stylesheet" href="main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,32 +16,13 @@
     <!-- ============ LIGHTWEIGHT AURA BACKGROUND ============ -->
     <div class="aura-bg"></div>
     <div class="morph-blobs">
+        
         <div class="morph-blob blob-1"></div>
         <div class="morph-blob blob-2"></div>
         <div class="morph-blob blob-3"></div>
     </div>
     <div class="noise-overlay"></div>
 
-
-    <!-- ============ CINEMATIC LOADER ============ -->
-    <div class="cinematic-loader" id="loader">
-        <div class="loader-grid">
-            <div class="loader-cell"></div>
-            <div class="loader-cell"></div>
-            <div class="loader-cell"></div>
-            <div class="loader-cell"></div>
-        </div>
-        <div class="loader-center">
-            <div class="loader-ring"></div>
-            <div class="loader-ring"></div>
-            <div class="loader-ring"></div>
-            <span class="loader-text" data-text="JAYAPRAKASH">JAYAPRAKASH</span>
-            <div class="loader-progress">
-                <div class="loader-progress-bar"></div>
-            </div>
-            <span class="loader-percent">0%</span>
-        </div>
-    </div>
 
     <!-- ============ NAVIGATION ============ -->
     <nav class="nav-glass" id="mainNav">
@@ -167,22 +151,15 @@
             </div>
         </div>
 
-        <!-- Profile Holographic Card -->
-        <div class="holo-card-wrapper">
-            <div class="holo-card" id="holoCard" data-tilt>
-                <div class="holo-shine"></div>
-                <div class="holo-rainbow"></div>
-                <div class="holo-content">
-                    <div class="holo-image">
-                        <img src="profile.new.jpg" alt="Jayaprakash K">
-                        <div class="holo-image-border"></div>
+        <!-- Profile Showcase Card - Circular -->
+        <div class="profile-card-wrapper">
+            <div class="profile-card circular-card">
+                <div class="card-glow"></div>
+                <div class="card-border-shine"></div>
+                <div class="profile-card-content">
+                    <div class="profile-image-container">
+                        <img src="profile.new.jpg" alt="Jayaprakash K" class="profile-image">
                     </div>
-                    <div class="holo-info">
-                        <span class="holo-name">JAYAPRAKASH K</span>
-                       
-                        </div>
-                    </div>
-                    <div class="holo-pattern"></div>
                 </div>
             </div>
         </div>
@@ -414,6 +391,48 @@
             <p class="footer-copy">&copy; 2025 Jayaprakash K. Crafted with passion.</p>
         </div>
     </footer>
+
+    <!-- ============ BUBBLE POP GAME ============ -->
+    <button class="game-trigger" id="gameTrigger" title="Play Bubble Pop!" aria-label="Open Bubble Pop Game">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="5" cy="7" r="2.5"/>
+            <circle cx="19" cy="7" r="2"/>
+            <circle cx="7" cy="18" r="3"/>
+            <circle cx="17" cy="17" r="2"/>
+        </svg>
+    </button>
+
+    <div class="bubble-game" id="bubbleGame" role="dialog" aria-modal="true" aria-label="Bubble Pop Game">
+        <div class="game-header">
+            <div class="game-score">
+                <span class="score-label">SCORE</span>
+                <span class="score-value" id="gameScore">0</span>
+            </div>
+            <div class="game-timer">
+                <span class="timer-label">TIME</span>
+                <span class="timer-value" id="gameTimer">30</span>
+            </div>
+            <button class="game-close" id="gameClose" aria-label="Close game">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="game-arena" id="gameArena"></div>
+        <div class="game-overlay" id="gameOverlay">
+            <div class="game-message">
+                <h3 class="game-title">🫧 Bubble Pop!</h3>
+                <p class="game-desc">Tap the rising bubbles to score points!<br><strong>Golden ★</strong> = 3x points · <strong>Rainbow ✦</strong> = 5x points<br>Build combos for bonus multipliers!</p>
+                <p class="game-final-score">Final Score: <span id="finalScore">0</span></p>
+                <div class="game-buttons">
+                    <button class="game-start-btn" id="gameStartBtn">START GAME</button>
+                    <button class="game-exit-btn" id="gameExitBtn">EXIT</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="main.js"></script>
 </body>
