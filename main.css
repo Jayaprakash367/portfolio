@@ -3455,12 +3455,12 @@ img { max-width: 100%; display: block; }
 .game-bubble {
     position: absolute;
     border-radius: 50%;
-    cursor: pointer;
+    cursor: crosshair;
     pointer-events: auto;
     touch-action: none;
     -webkit-tap-highlight-color: transparent;
     will-change: transform;
-    transition: filter 0.1s ease;
+    transition: filter 0.1s ease, transform 0.1s ease;
 }
 
 /* Normal bubble */
@@ -3571,9 +3571,11 @@ img { max-width: 100%; display: block; }
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Bubble hover/active states */
+/* Bubble hover/active states - ENHANCED FOR HOVER MODE */
 .game-bubble:hover {
-    filter: brightness(1.2);
+    filter: brightness(1.4) drop-shadow(0 0 20px currentColor);
+    transform: scale(1.1) !important;
+    transition: all 0.1s ease-out;
 }
 
 .game-bubble:active {

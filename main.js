@@ -634,8 +634,9 @@ class BubblePopGame {
             }
         });
         
-        // Handle pointerdown on arena for bubble popping
-        this.arena.addEventListener('pointerdown', (e) => this.handleArenaPointer(e), { passive: false });
+        // ✨ HOVER MODE: Use pointerenter (hover) instead of pointerdown (click)
+        // This makes bubbles pop when you hover over them!
+        this.arena.addEventListener('pointerenter', (e) => this.handleArenaPointer(e), true);
     }
     
     handleArenaPointer(e) {
