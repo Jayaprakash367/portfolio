@@ -172,11 +172,21 @@ class ScrollCinematic {
 
 // ═══════════════════════════════════════════
 // XI. 3D TILT EFFECT (Enhanced with Lighting)
+// Desktop only - disabled on mobile/touch devices
 // ═══════════════════════════════════════════
 class TiltEffect {
     constructor() {
+        // Skip tilt effects on mobile/touch devices
+        if (this.isMobile()) return;
+        
         this.elements = document.querySelectorAll('[data-tilt]');
         this.elements.forEach(el => this.addTilt(el));
+    }
+    
+    isMobile() {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+               window.innerWidth <= 768 ||
+               'ontouchstart' in window;
     }
 
     addTilt(el) {
@@ -212,10 +222,21 @@ class TiltEffect {
 // ═══════════════════════════════════════════
 // XII. MAGNETIC BUTTONS (Enhanced)
 // ═══════════════════════════════════════════
+// Magnetic Buttons - Desktop only
+// Disabled on mobile/touch devices for cleaner UX
 class MagneticButtons {
     constructor() {
+        // Skip magnetic effects on mobile/touch devices
+        if (this.isMobile()) return;
+        
         this.buttons = document.querySelectorAll('[data-magnetic]');
         this.buttons.forEach(btn => this.addMagnetic(btn));
+    }
+    
+    isMobile() {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+               window.innerWidth <= 768 ||
+               'ontouchstart' in window;
     }
 
     addMagnetic(btn) {
@@ -257,11 +278,23 @@ class MagneticButtons {
 // ═══════════════════════════════════════════
 // XIII. LIQUID TEXT SCRAMBLE (Enhanced)
 // ═══════════════════════════════════════════
+// XIII. LIQUID TEXT SCRAMBLE (Enhanced)
+// Desktop hover only - disabled on mobile
+// ═══════════════════════════════════════════
 class TextScramble {
     constructor() {
+        // Skip on mobile/touch devices
+        if (this.isMobile()) return;
+        
         this.chars = '!<>-_\\/[]{}—=+*^?#◆◇○●□■△▽▷◁';
         this.elements = document.querySelectorAll('.scramble-text');
         this.elements.forEach(el => this.addScramble(el));
+    }
+    
+    isMobile() {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+               window.innerWidth <= 768 ||
+               'ontouchstart' in window;
     }
 
     addScramble(el) {
@@ -403,6 +436,9 @@ class ParallaxLayers {
 // ═══════════════════════════════════════════
 class HoloCardEffect {
     constructor() {
+        // Skip on mobile/touch devices
+        if (this.isMobile()) return;
+        
         this.card = document.getElementById('holoCard');
         if (!this.card) return;
 
@@ -438,13 +474,23 @@ class HoloCardEffect {
             }
         });
     }
+    
+    isMobile() {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+               window.innerWidth <= 768 ||
+               'ontouchstart' in window;
+    }
 }
 
 // ═══════════════════════════════════════════
 // XIX. GLITCH EFFECT (Random cinematic glitch)
+// Disabled on mobile for performance and clean UX
 // ═══════════════════════════════════════════
 class GlitchEffect {
     constructor() {
+        // Skip on mobile/touch devices
+        if (this.isMobile()) return;
+        
         const titles = document.querySelectorAll('.section-title, .page-hero-title, .hero-title');
         titles.forEach(title => {
             setInterval(() => {
@@ -464,13 +510,23 @@ class GlitchEffect {
             }, 1500);
         });
     }
+    
+    isMobile() {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+               window.innerWidth <= 768 ||
+               'ontouchstart' in window;
+    }
 }
 
 // ═══════════════════════════════════════════
 // XX. CARD SPOTLIGHT EFFECT (Mouse-reactive lighting)
+// Desktop only - disabled on mobile/touch devices
 // ═══════════════════════════════════════════
 class CardSpotlight {
     constructor() {
+        // Skip on mobile/touch devices
+        if (this.isMobile()) return;
+        
         const cards = document.querySelectorAll('.glass-card, .featured-item, .project-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -481,6 +537,12 @@ class CardSpotlight {
                 card.style.setProperty('--spotlight-y', y + 'px');
             });
         });
+    }
+    
+    isMobile() {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+               window.innerWidth <= 768 ||
+               'ontouchstart' in window;
     }
 }
 
@@ -1108,6 +1170,26 @@ class BubblePopGame {
 // XXVI. INITIALIZE THE AURA ENGINE
 // ═══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
+    // ── Mobile Performance: Make hero content visible immediately ──
+    const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+                     window.innerWidth <= 768 ||
+                     'ontouchstart' in window;
+    
+    if (isMobile) {
+        // Force hero content visible immediately
+        const heroElements = document.querySelectorAll(`
+            .hero-title, .title-word, .hero-subtitle, .subtitle-text,
+            .hero-description, .hero-cta, .hero-stats, .hero-badge,
+            .profile-card-wrapper, .hero-content
+        `);
+        heroElements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.animation = 'none';
+        });
+        console.log('✓ Mobile: Hero content made visible immediately');
+    }
+    
     // ── Core Systems ──
     new Navigation();
     new ScrollProgress();
@@ -1158,6 +1240,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // ═══════════════════════════════════════════
 class LenisSmoothScroll {
     constructor() {
+        // Skip Lenis on mobile for better performance
+        if (this.isMobile()) {
+            console.log('⊘ Lenis disabled on mobile for performance');
+            return;
+        }
+        
         if (typeof Lenis === 'undefined') {
             console.warn('Lenis not loaded, using native smooth scroll');
             return;
@@ -1204,23 +1292,45 @@ class LenisSmoothScroll {
         
         console.log('✓ Lenis Smooth Scroll initialized');
     }
+    
+    isMobile() {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+               window.innerWidth <= 768 ||
+               'ontouchstart' in window;
+    }
 }
 
 // ═══════════════════════════════════════════
 // XXVIII. SCROLL ANIMATIONS WITH INTERSECTION OBSERVER
+// Optimized for mobile - simpler animations
 // ═══════════════════════════════════════════
 class ScrollAnimations {
     constructor() {
+        this.isMobileDevice = this.isMobile();
+        
         this.observerOptions = {
             root: null,
-            rootMargin: '0px 0px -100px 0px',
-            threshold: 0.1
+            rootMargin: this.isMobileDevice ? '0px' : '0px 0px -100px 0px',
+            threshold: this.isMobileDevice ? 0.05 : 0.1
         };
         
         this.init();
     }
     
+    isMobile() {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+               window.innerWidth <= 768 ||
+               'ontouchstart' in window;
+    }
+    
     init() {
+        // On mobile, make everything visible immediately for performance
+        if (this.isMobileDevice) {
+            this.makeAllVisible();
+            console.log('✓ Mobile: Content made visible immediately');
+            return;
+        }
+        
         // Create observer
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1239,6 +1349,25 @@ class ScrollAnimations {
         this.observeElements();
         
         console.log('✓ Scroll Animations initialized');
+    }
+    
+    makeAllVisible() {
+        // On mobile, show everything without animations for better performance
+        const elements = document.querySelectorAll(`
+            .fade-in, .fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right,
+            .scale-in, .scale-in-up, .rotate-in, .blur-in, .slide-in-bounce,
+            .animate-on-scroll, .glass-card, .featured-item, .interest-card,
+            .project-card, .skill-category-block, .edu-item, .section-title,
+            section, .hero-content, .profile-card-wrapper, .title-word,
+            .hero-title, .hero-subtitle, .hero-description, .hero-cta, .hero-stats
+        `);
+        
+        elements.forEach(el => {
+            el.classList.add('animated');
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.animation = 'none';
+        });
     }
     
     autoAnnotate() {
