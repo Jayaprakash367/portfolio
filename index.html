@@ -11,6 +11,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 </head>
 <body>
     <!-- ============ LIGHTWEIGHT AURA BACKGROUND ============ -->
@@ -167,16 +172,16 @@
     </section>
 
     <!-- ============ ABOUT / INTERESTS SECTION ============ -->
-    <section class="about-section" id="about">
+    <section class="about-section fade-in-up" id="about">
         <div class="section-container">
-            <div class="section-header">
+            <div class="section-header fade-in-down">
                 <span class="section-number">01</span>
-                <h2 class="section-title split-text">AREAS OF INTEREST</h2>
+                <h2 class="section-title">AREAS OF INTEREST</h2>
                 <div class="section-line"></div>
             </div>
 
             <div class="interests-orbit">
-                <div class="interest-card glass-card" data-delay="0" data-tilt>
+                <div class="interest-card glass-card scale-in-up stagger-1" data-delay="0" data-tilt>
                     <div class="card-glow"></div>
                     <div class="card-icon-wrap">
                         <div class="card-icon">
@@ -188,7 +193,7 @@
                     <div class="card-border-anim"></div>
                 </div>
 
-                <div class="interest-card glass-card" data-delay="150" data-tilt>
+                <div class="interest-card glass-card scale-in-up stagger-2" data-delay="150" data-tilt>
                     <div class="card-glow"></div>
                     <div class="card-icon-wrap">
                         <div class="card-icon">
@@ -200,7 +205,7 @@
                     <div class="card-border-anim"></div>
                 </div>
 
-                <div class="interest-card glass-card" data-delay="300" data-tilt>
+                <div class="interest-card glass-card scale-in-up stagger-3" data-delay="300" data-tilt>
                     <div class="card-glow"></div>
                     <div class="card-icon-wrap">
                         <div class="card-icon">
@@ -212,7 +217,7 @@
                     <div class="card-border-anim"></div>
                 </div>
 
-                <div class="interest-card glass-card" data-delay="450" data-tilt>
+                <div class="interest-card glass-card scale-in-up stagger-4" data-delay="450" data-tilt>
                     <div class="card-glow"></div>
                     <div class="card-icon-wrap">
                         <div class="card-icon">
@@ -228,16 +233,16 @@
     </section>
 
     <!-- ============ FEATURED PROJECTS PREVIEW ============ -->
-    <section class="featured-section" id="featured">
+    <section class="featured-section fade-in-up" id="featured">
         <div class="section-container">
-            <div class="section-header">
+            <div class="section-header fade-in-down">
                 <span class="section-number">02</span>
-                <h2 class="section-title split-text">Project</h2>
+                <h2 class="section-title">Project</h2>
                 <div class="section-line"></div>
             </div>
 
             <div class="featured-grid">
-                <a href="projects.html" class="featured-item" data-project="scannon">
+                <a href="projects.html" class="featured-item scale-in-up stagger-1 hover-lift" data-project="scannon">
                     <div class="featured-bg"><div class="featured-gradient"></div></div>
                     <div class="featured-content">
                         <span class="featured-num">01</span>
@@ -250,7 +255,7 @@
                     </div>
                 </a>
 
-                <a href="projects.html" class="featured-item" data-project="hospital">
+                <a href="projects.html" class="featured-item scale-in-up stagger-2 hover-lift" data-project="hospital">
                     <div class="featured-bg"><div class="featured-gradient"></div></div>
                     <div class="featured-content">
                         <span class="featured-num">02</span>
@@ -263,7 +268,7 @@
                     </div>
                 </a>
 
-                <a href="projects.html" class="featured-item" data-project="safenet">
+                <a href="projects.html" class="featured-item scale-in-up stagger-3 hover-lift" data-project="safenet">
                     <div class="featured-bg"><div class="featured-gradient"></div></div>
                     <div class="featured-content">
                         <span class="featured-num">03</span>
@@ -277,8 +282,8 @@
                 </a>
             </div>
 
-            <div class="view-all-wrap">
-                <a href="projects.html" class="liquid-btn primary" data-magnetic>
+            <div class="view-all-wrap fade-in">
+                <a href="projects.html" class="liquid-btn primary hover-glow" data-magnetic>
                     <span class="btn-fill"></span>
                     <span class="btn-text">VIEW ALL PROJECTS</span>
                     <span class="btn-arrow">
@@ -290,16 +295,16 @@
     </section>
 
     <!-- ============ CONTACT SECTION ============ -->
-    <section class="contact-section" id="contact">
+    <section class="contact-section fade-in-up" id="contact">
         <div class="section-container">
-            <div class="section-header">
+            <div class="section-header fade-in-down">
                 <span class="section-number">03</span>
-                <h2 class="section-title split-text">LET'S CONNECT</h2>
+                <h2 class="section-title">LET'S CONNECT</h2>
                 <div class="section-line"></div>
             </div>
 
             <div class="contact-grid">
-                <div class="contact-form-wrap glass-card">
+                <div class="contact-form-wrap glass-card scale-in-up">
                     <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
                         <input type="hidden" name="access_key" value="c23e0f95-5211-49ad-b9b5-a1143dbd8840">
                         <input type="hidden" name="from_name" value="Portfolio Contact Form">
@@ -327,7 +332,7 @@
                             <div class="input-glow"></div>
                         </div>
 
-                        <button type="submit" class="liquid-btn primary submit-btn" data-magnetic>
+                        <button type="submit" class="liquid-btn primary submit-btn hover-glow" data-magnetic>
                             <span class="btn-fill"></span>
                             <span class="btn-text">SEND MESSAGE</span>
                             <span class="btn-arrow">
@@ -338,7 +343,7 @@
                 </div>
 
                 <div class="contact-info-side">
-                    <div class="info-card glass-card" data-tilt>
+                    <div class="info-card glass-card fade-in-left stagger-1" data-tilt>
                         <div class="info-icon">
                             <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 7L12 13L22 7" stroke="currentColor" stroke-width="1.5"/></svg>
                         </div>

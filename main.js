@@ -1136,9 +1136,457 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // ── Fun Game ──
     new BubblePopGame();
+    
+    // ── Advanced Animation Systems ──
+    new LenisSmoothScroll();
+    new ScrollAnimations();
+    new AdvancedParallax();
+    new CustomCursor();
+    new TextSplitAnimation();
+    new MicroInteractions();
+    new PerformanceOptimizer();
 
     console.log('%c✦ AQUA FLOW ENGINE v6.0 — JAYAPRAKASH K', 
         'background: linear-gradient(135deg, #00d4ff, #14b8a6); color: #0a1628; padding: 12px 24px; font-size: 14px; font-weight: bold; border-radius: 8px;');
     console.log('%c"Dive into the experience."', 
         'color: #00d4ff; font-style: italic; padding: 4px;');
 });
+
+// ═══════════════════════════════════════════
+// XXVII. LENIS SMOOTH SCROLL INTEGRATION
+// ═══════════════════════════════════════════
+class LenisSmoothScroll {
+    constructor() {
+        if (typeof Lenis === 'undefined') {
+            console.warn('Lenis not loaded, using native smooth scroll');
+            return;
+        }
+        
+        this.lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+        
+        // Add Lenis class to html
+        document.documentElement.classList.add('lenis');
+        
+        // Animation frame loop
+        const raf = (time) => {
+            this.lenis.raf(time);
+            requestAnimationFrame(raf);
+        };
+        requestAnimationFrame(raf);
+        
+        // Handle anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                const href = anchor.getAttribute('href');
+                if (href === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    this.lenis.scrollTo(target, {
+                        offset: -80,
+                        duration: 1.5
+                    });
+                }
+            });
+        });
+        
+        console.log('✓ Lenis Smooth Scroll initialized');
+    }
+}
+
+// ═══════════════════════════════════════════
+// XXVIII. SCROLL ANIMATIONS WITH INTERSECTION OBSERVER
+// ═══════════════════════════════════════════
+class ScrollAnimations {
+    constructor() {
+        this.observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -100px 0px',
+            threshold: 0.1
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        // Create observer
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    // Optionally unobserve after animation
+                    // this.observer.unobserve(entry.target);
+                }
+            });
+        }, this.observerOptions);
+        
+        // Auto-add animation classes to common elements
+        this.autoAnnotate();
+        
+        // Observe all elements with animation classes
+        this.observeElements();
+        
+        console.log('✓ Scroll Animations initialized');
+    }
+    
+    autoAnnotate() {
+        // Auto-add fade-in-up to sections
+        document.querySelectorAll('section:not(.hero)').forEach(section => {
+            if (!section.classList.contains('fade-in-up')) {
+                section.classList.add('fade-in-up');
+            }
+        });
+        
+        // Auto-add animations to cards
+        document.querySelectorAll('.glass-card, .featured-item, .interest-card, .project-card, .skill-category-block, .edu-item').forEach((el, index) => {
+            if (!el.className.match(/fade-in|scale-in|slide-in/)) {
+                el.classList.add('scale-in-up', `stagger-${(index % 5) + 1}`);
+            }
+        });
+        
+        // Auto-add to titles
+        document.querySelectorAll('.section-title').forEach(title => {
+            if (!title.className.match(/fade-in/)) {
+                title.classList.add('fade-in-up');
+            }
+        });
+    }
+    
+    observeElements() {
+        const animatedElements = document.querySelectorAll(`
+            .fade-in, .fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right,
+            .scale-in, .scale-in-up, .rotate-in, .blur-in, .slide-in-bounce,
+            .animate-on-scroll
+        `);
+        
+        animatedElements.forEach(el => {
+            this.observer.observe(el);
+        });
+    }
+}
+
+// ═══════════════════════════════════════════
+// XXIX. ADVANCED PARALLAX EFFECTS
+// ═══════════════════════════════════════════
+class AdvancedParallax {
+    constructor() {
+        if (window.innerWidth < 768) {
+            console.log('⊘ Parallax disabled on mobile');
+            return;
+        }
+        
+        this.elements = {
+            slow: document.querySelectorAll('.parallax-slow'),
+            medium: document.querySelectorAll('.parallax, [data-parallax]'),
+            fast: document.querySelectorAll('.parallax-fast')
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        window.addEventListener('scroll', () => this.update(), { passive: true });
+        this.update();
+        console.log('✓ Advanced Parallax initialized');
+    }
+    
+    update() {
+        const scrollY = window.pageYOffset;
+        
+        // Slow parallax (0.2x speed)
+        this.elements.slow.forEach(el => {
+            const speed = parseFloat(el.dataset.speed) || 0.2;
+            const yPos = -(scrollY * speed);
+            el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        });
+        
+        // Medium parallax (0.5x speed)
+        this.elements.medium.forEach(el => {
+            const speed = parseFloat(el.dataset.speed) || 0.5;
+            const rect = el.getBoundingClientRect();
+            const elementTop = rect.top + scrollY;
+            const yPos = -(scrollY - elementTop) * speed;
+            el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        });
+        
+        // Fast parallax (0.8x speed)
+        this.elements.fast.forEach(el => {
+            const speed = parseFloat(el.dataset.speed) || 0.8;
+            const yPos = -(scrollY * speed);
+            el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        });
+    }
+}
+
+// ═══════════════════════════════════════════
+// XXX. CUSTOM CURSOR
+// ═══════════════════════════════════════════
+class CustomCursor {
+    constructor() {
+        if ('ontouchstart' in window || window.innerWidth < 768) {
+            console.log('⊘ Custom cursor disabled on touch devices');
+            return;
+        }
+        
+        this.cursor = this.createCursor();
+        this.follower = this.createFollower();
+        this.cursorPos = { x: 0, y: 0 };
+        this.followerPos = { x: 0, y: 0 };
+        
+        this.init();
+    }
+    
+    createCursor() {
+        const cursor = document.createElement('div');
+        cursor.className = 'custom-cursor';
+        document.body.appendChild(cursor);
+        return cursor;
+    }
+    
+    createFollower() {
+        const follower = document.createElement('div');
+        follower.className = 'custom-cursor-follower';
+        document.body.appendChild(follower);
+        return follower;
+    }
+    
+    init() {
+        // Mouse move
+        document.addEventListener('mousemove', (e) => {
+            this.cursorPos = { x: e.clientX, y: e.clientY };
+            
+            if (!this.cursor.classList.contains('visible')) {
+                this.cursor.classList.add('visible');
+                this.follower.classList.add('visible');
+            }
+        });
+        
+        // Mouse leave
+        document.addEventListener('mouseleave', () => {
+            this.cursor.classList.remove('visible');
+            this.follower.classList.remove('visible');
+        });
+        
+        // Interactive elements
+        const interactiveElements = 'a, button, .btn-primary, .btn-secondary, .project-card, .interest-card, .nav-link, input, textarea';
+        document.querySelectorAll(interactiveElements).forEach(el => {
+            el.addEventListener('mouseenter', () => this.cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => this.cursor.classList.remove('hover'));
+        });
+        
+        // Animate cursor
+        this.animate();
+        console.log('✓ Custom Cursor initialized');
+    }
+    
+    animate() {
+        // Smooth cursor movement with lerp
+        this.followerPos.x += (this.cursorPos.x - this.followerPos.x) * 0.15;
+        this.followerPos.y += (this.cursorPos.y - this.followerPos.y) * 0.15;
+        
+        this.cursor.style.transform = `translate3d(${this.cursorPos.x}px, ${this.cursorPos.y}px, 0)`;
+        this.follower.style.transform = `translate3d(${this.followerPos.x}px, ${this.followerPos.y}px, 0)`;
+        
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
+// ═══════════════════════════════════════════
+// XXXI. TEXT SPLIT ANIMATION
+// ═══════════════════════════════════════════
+class TextSplitAnimation {
+    constructor() {
+        this.elements = document.querySelectorAll('.split-text, [data-split]');
+        if (this.elements.length === 0) return;
+        
+        this.init();
+    }
+    
+    init() {
+        this.elements.forEach(el => {
+            this.splitText(el);
+        });
+        
+        // Observe for animation trigger
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.animateText(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        this.elements.forEach(el => observer.observe(el));
+        console.log('✓ Text Split Animation initialized');
+    }
+    
+    splitText(element) {
+        const text = element.textContent;
+        const chars = text.split('');
+        element.textContent = '';
+        
+        chars.forEach((char, index) => {
+            const span = document.createElement('span');
+            span.className = 'char';
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.style.transitionDelay = `${index * 0.03}s`;
+            element.appendChild(span);
+        });
+    }
+    
+    animateText(element) {
+        element.classList.add('animated');
+    }
+}
+
+// ═══════════════════════════════════════════
+// XXXII. MICRO-INTERACTIONS
+// ═══════════════════════════════════════════
+class MicroInteractions {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.addButtonRipples();
+        this.addCardHoverEffects();
+        this.addInputFocusEffects();
+        this.addLoadingStates();
+        console.log('✓ Micro-interactions initialized');
+    }
+    
+    addButtonRipples() {
+        document.querySelectorAll('.btn-primary, .btn-secondary, button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    }
+    
+    addCardHoverEffects() {
+        document.querySelectorAll('.project-card, .interest-card, .glass-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+            });
+        });
+    }
+    
+    addInputFocusEffects() {
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement?.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement?.classList.remove('focused');
+            });
+        });
+    }
+    
+    addLoadingStates() {
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const submitBtn = this.querySelector('[type="submit"]');
+                if (submitBtn && !submitBtn.classList.contains('loading')) {
+                    submitBtn.classList.add('loading');
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+    }
+}
+
+// ═══════════════════════════════════════════
+// XXXIII. PERFORMANCE OPTIMIZER
+// ═══════════════════════════════════════════
+class PerformanceOptimizer {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        this.lazyLoadImages();
+        this.optimizeAnimations();
+        this.handleReducedMotion();
+        console.log('✓ Performance Optimizer initialized');
+    }
+    
+    lazyLoadImages() {
+        const images = document.querySelectorAll('img[data-src]');
+        
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    }
+    
+    optimizeAnimations() {
+        // Add will-change only when needed
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.willChange = 'transform, opacity';
+                } else {
+                    entry.target.style.willChange = 'auto';
+                }
+            });
+        }, { rootMargin: '200px' });
+        
+        animatedElements.forEach(el => observer.observe(el));
+    }
+    
+    handleReducedMotion() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        
+        if (prefersReducedMotion.matches) {
+            document.documentElement.classList.add('reduce-motion');
+            console.log('⊘ Reduced motion enabled');
+        }
+    }
+}
+
