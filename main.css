@@ -2710,7 +2710,7 @@ img { max-width: 100%; display: block; }
    ======================================== */
 
 /* ── Large Desktops (1440px+) ── */
-@media (min-width: 1440px) {
+@media only screen and (min-width: 1440px) {
     .section-container { max-width: 1400px; }
     .hero { padding: 12rem 4rem 6rem; }
     .hero-title .title-word { font-size: clamp(3rem, 5vw, 5rem); }
@@ -2721,7 +2721,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Standard Laptops (1200px - 1440px) ── */
-@media (max-width: 1440px) and (min-width: 1200px) {
+@media only screen and (max-width: 1440px) and (min-width: 1200px) {
     .section-container { max-width: 1200px; padding: 0 2rem; }
     .hero { padding: 10rem 3rem 5rem; }
     .featured-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2729,7 +2729,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Small Laptops & Tablets Landscape (1024px - 1200px) ── */
-@media (max-width: 1200px) and (min-width: 1024px) {
+@media only screen and (max-width: 1200px) and (min-width: 1024px) {
     .section-container { max-width: 1000px; padding: 0 2rem; }
     .hero { padding: 9rem 2.5rem 4rem; }
     .hero-title .title-word { font-size: clamp(2rem, 4vw, 3.5rem); }
@@ -2740,7 +2740,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Tablets Portrait (768px - 1024px) ── */
-@media (max-width: 1024px) {
+@media only screen and (max-width: 1024px) {
     .hero {
         flex-direction: column;
         text-align: center;
@@ -2812,7 +2812,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Large Phones & Small Tablets (576px - 768px) ── */
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     /* Navigation */
     .nav-links { display: none; }
     .nav-menu-toggle { display: flex; }
@@ -2965,7 +2965,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Standard Phones (480px - 576px) ── */
-@media (max-width: 576px) {
+@media only screen and (max-width: 576px) {
     .hero { 
         padding: 5.5rem 1.25rem 2.5rem; 
         gap: 1.5rem;
@@ -3048,7 +3048,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Small Phones (320px - 480px) ── */
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
     html { font-size: 14px; }
     
     .nav-glass { padding: 0.875rem 1rem; }
@@ -3147,7 +3147,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Very Small Phones (< 320px) ── */
-@media (max-width: 320px) {
+@media only screen and (max-width: 320px) {
     html { font-size: 13px; }
     
     .hero { 
@@ -3863,7 +3863,7 @@ img { max-width: 100%; display: block; }
     align-items: center;
 }
 
-@media (min-width: 480px) {
+@media only screen and (min-width: 480px) {
     .game-buttons {
         flex-direction: row;
         justify-content: center;
@@ -3944,7 +3944,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Game Responsive Styles ── */
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     .game-trigger {
         bottom: 1.5rem;
         right: 1.5rem;
@@ -3991,7 +3991,7 @@ img { max-width: 100%; display: block; }
     }
 }
 
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
     .game-trigger {
         bottom: 1rem;
         right: 1rem;
@@ -4475,7 +4475,7 @@ html.lenis {
 }
 
 /* ── High Performance Mode ── */
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     .parallax,
     .parallax-slow,
     .parallax-fast {
@@ -4999,7 +4999,7 @@ button.loading::after {
    TABLET-SPECIFIC (iPad, etc.)
    ══════════════════════════════════════ */
 
-@media (min-width: 768px) and (max-width: 1024px) and (hover: none) {
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (hover: none) {
     /* Slightly larger touch targets for tablets */
     .btn,
     .primary-btn,
@@ -5017,9 +5017,10 @@ button.loading::after {
    🍎 iOS-STYLE MOBILE DESIGN SYSTEM
    Apple-inspired smooth, fluid, premium mobile experience
    Proper colors, spacing, and component structure
+   Only applies to actual mobile devices and small screens
    ══════════════════════════════════════════════════════════════ */
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     
     /* ══════════════════════════════════════
        iOS ROOT VARIABLES (Mobile Override)
@@ -5570,7 +5571,7 @@ button.loading::after {
 /* ══════════════════════════════════════
    EXTRA SMALL PHONES (iPhone SE, etc.)
    ══════════════════════════════════════ */
-@media (max-width: 375px) {
+@media only screen and (max-width: 375px) {
     .hero-title,
     .hero-title .title-word {
         font-size: 2rem !important;
@@ -5589,7 +5590,7 @@ button.loading::after {
 /* ══════════════════════════════════════
    TABLET (iPad)
    ══════════════════════════════════════ */
-@media (min-width: 768px) and (max-width: 1024px) and (hover: none) {
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (hover: none) {
     .btn,
     .liquid-btn {
         min-height: 52px !important;
@@ -5613,8 +5614,9 @@ button.loading::after {
 
 /* ══════════════════════════════════════════════════════════════
    📱 MOBILE CONTENT FIXES - Clean Layout & Design
+   Only applies to actual mobile devices
    ══════════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     
     /* ── INTEREST CARDS - Clean Mobile Layout ── */
     .interests-orbit {
