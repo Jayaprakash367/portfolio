@@ -658,36 +658,49 @@ class BubblePopGame {
         };
         document.addEventListener('pointerdown', initAudio, { once: true });
         
+        // MOBILE FIX: Better touch handling
+        const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
         // Use Pointer Events API for unified touch/mouse handling
-        this.trigger.addEventListener('pointerdown', (e) => {
+        this.trigger.addEventListener(isMobile ? 'touchstart' : 'pointerdown', (e) => {
             e.preventDefault();
             this.openGame();
-        });
+        }, { passive: false });
         
-        this.closeBtn.addEventListener('pointerdown', (e) => {
+        this.closeBtn.addEventListener(isMobile ? 'touchstart' : 'pointerdown', (e) => {
             e.preventDefault();
             this.closeGame();
-        });
+        }, { passive: false });
         
-        this.startBtn.addEventListener('pointerdown', (e) => {
+        this.startBtn.addEventListener(isMobile ? 'touchstart' : 'pointerdown', (e) => {
             e.preventDefault();
             this.startGame();
-        });
+        }, { passive: false });
         
         // Exit button - close game and return to page
         if (this.exitBtn) {
-            this.exitBtn.addEventListener('pointerdown', (e) => {
+            this.exitBtn.addEventListener(isMobile ? 'touchstart' : 'pointerdown', (e) => {
                 e.preventDefault();
                 this.closeGame();
-            });
+            }, { passive: false });
         }
         
         // Prevent context menu and text selection in game area
         this.game.addEventListener('contextmenu', e => e.preventDefault());
         this.game.addEventListener('selectstart', e => e.preventDefault());
         
-        // Handle touch events for better mobile experience
-        this.game.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+        // MOBILE FIX: Prevent scroll and improve touch responsiveness
+        this.game.addEventListener('touchmove', e => {
+            if (this.isPlaying) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        this.game.addEventListener('touchstart', e => {
+            if (this.isPlaying) {
+                e.preventDefault();
+            }
+        }, { passive: false });
         
         // Escape key to close
         document.addEventListener('keydown', (e) => {
@@ -696,9 +709,25 @@ class BubblePopGame {
             }
         });
         
-        // ✨ HOVER MODE: Use pointerenter (hover) instead of pointerdown (click)
-        // This makes bubbles pop when you hover over them!
-        this.arena.addEventListener('pointerenter', (e) => this.handleArenaPointer(e), true);
+        // MOBILE FIX: Use tap/touch for mobile, hover for desktop
+        if (isMobile) {
+            this.arena.addEventListener('touchstart', (e) => this.handleMobileTouch(e), { passive: false });
+        } else {
+            this.arena.addEventListener('pointerenter', (e) => this.handleArenaPointer(e), true);
+        }
+    }
+    
+    handleMobileTouch(e) {
+        if (!this.isPlaying) return;
+        e.preventDefault();
+        
+        const touch = e.touches[0];
+        const target = document.elementFromPoint(touch.clientX, touch.clientY);
+        
+        if (target && target.classList.contains('game-bubble') && !target.classList.contains('popped')) {
+            const points = parseInt(target.dataset.points) || 1;
+            this.popBubble(e, target, points);
+        }
     }
     
     handleArenaPointer(e) {
@@ -873,6 +902,8 @@ class BubblePopGame {
     spawnBubble() {
         if (!this.isPlaying || !this.arena) return;
         
+        const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
         const bubble = document.createElement('div');
         bubble.className = 'game-bubble';
         
@@ -901,9 +932,9 @@ class BubblePopGame {
         const arenaHeight = this.arena.offsetHeight;
         bubble.style.bottom = '-' + (size + 20) + 'px';
         
-        // Speed based on size and difficulty (smaller = faster)
-        const baseSpeed = 4.5 - (size / 40);
-        const duration = Math.max(2.5, baseSpeed / this.difficulty);
+        // MOBILE FIX: Slower, more stable speed on mobile
+        const baseSpeed = isMobile ? 5.5 - (size / 50) : 4.5 - (size / 40);
+        const duration = Math.max(isMobile ? 3.5 : 2.5, baseSpeed / this.difficulty);
         
         // Assign bubble type and color
         const types = ['normal', 'golden', 'rainbow'];
@@ -927,16 +958,18 @@ class BubblePopGame {
         
         // Set touch-action for better mobile handling
         bubble.style.touchAction = 'none';
+        bubble.style.userSelect = 'none';
+        bubble.style.webkitUserSelect = 'none';
         
         this.arena.appendChild(bubble);
         this.bubbles.add(bubble);
         
-        // Animate with requestAnimationFrame for smoother motion
+        // MOBILE FIX: Simpler animation with less wobble on mobile
         const startTime = performance.now();
         const startY = -size - 20;
         const endY = arenaHeight + size + 50;
-        const wobbleAmount = 15 + Math.random() * 15;
-        const wobbleSpeed = 2 + Math.random() * 2;
+        const wobbleAmount = isMobile ? 8 + Math.random() * 8 : 15 + Math.random() * 15;
+        const wobbleSpeed = isMobile ? 1.5 + Math.random() * 1 : 2 + Math.random() * 2;
         
         const animate = (currentTime) => {
             if (!this.isPlaying || !bubble.parentNode || bubble.classList.contains('popped')) {
@@ -951,13 +984,19 @@ class BubblePopGame {
                 return;
             }
             
-            // Smooth rise with sine wave wobble
+            // MOBILE FIX: Smoother animation with requestAnimationFrame throttling
             const currentY = startY + (endY - startY) * progress;
             const wobbleX = Math.sin(elapsed * wobbleSpeed) * wobbleAmount;
-            const rotate = Math.sin(elapsed * 1.5) * 10;
-            const scale = 1 + Math.sin(elapsed * 3) * 0.05;
             
-            bubble.style.transform = `translate(${wobbleX}px, ${-currentY}px) rotate(${rotate}deg) scale(${scale})`;
+            if (isMobile) {
+                // Simpler transform for mobile performance
+                bubble.style.transform = `translate(${wobbleX}px, ${-currentY}px)`;
+            } else {
+                // Full effects for desktop
+                const rotate = Math.sin(elapsed * 1.5) * 10;
+                const scale = 1 + Math.sin(elapsed * 3) * 0.05;
+                bubble.style.transform = `translate(${wobbleX}px, ${-currentY}px) rotate(${rotate}deg) scale(${scale})`;
+            }
             
             bubble._animationId = requestAnimationFrame(animate);
         };

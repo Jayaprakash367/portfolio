@@ -5765,66 +5765,125 @@ button.loading::after {
     }
     
     .featured-item {
-        min-height: 280px !important;
-        padding: 16px !important;
+        position: relative !important;
+        min-height: 320px !important;
+        max-height: 400px !important;
+        height: 400px !important;
+        padding: 0 !important;
         border-radius: 14px !important;
         transform: none !important;
         background: rgba(28, 28, 30, 0.9) !important;
         border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-end !important;
+    }
+    
+    .featured-bg {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+        z-index: 0 !important;
     }
     
     /* Optimize images for mobile */
     .featured-image {
-        opacity: 0.3 !important;
-        filter: blur(0.5px) !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        opacity: 0.35 !important;
+        filter: blur(0px) !important;
         will-change: auto !important;
+        transform: none !important;
     }
     
     .featured-gradient {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
         background: linear-gradient(
             to bottom,
-            rgba(0,0,0,0.3) 0%, 
-            rgba(10, 22, 40, 0.85) 60%,
-            rgba(10, 22, 40, 0.98) 100%
+            rgba(0,0,0,0.2) 0%, 
+            rgba(10, 22, 40, 0.7) 50%,
+            rgba(10, 22, 40, 0.95) 100%
         ) !important;
+        z-index: 1 !important;
     }
     
     .featured-content {
-        padding: 16px !important;
+        position: relative !important;
+        z-index: 2 !important;
+        padding: 20px !important;
+    }
+    
+    .featured-num {
+        font-size: 0.75rem !important;
+        color: rgba(0, 212, 255, 0.8) !important;
+        margin-bottom: 8px !important;
+        display: block !important;
     }
     
     .featured-title {
-        font-size: 1.125rem !important;
-        font-weight: 600 !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
         margin-bottom: 8px !important;
+        color: #fff !important;
+        letter-spacing: -0.01em !important;
     }
     
     .featured-desc {
-        font-size: 0.8125rem !important;
+        font-size: 0.875rem !important;
         line-height: 1.4 !important;
         margin-bottom: 12px !important;
-        color: rgba(235, 235, 245, 0.6) !important;
+        color: rgba(235, 235, 245, 0.7) !important;
     }
     
     .featured-tags {
-        gap: 6px !important;
+        display: flex !important;
+        gap: 8px !important;
+        flex-wrap: wrap !important;
     }
     
     .featured-tags span {
-        font-size: 0.625rem !important;
-        padding: 4px 8px !important;
+        font-size: 0.6875rem !important;
+        padding: 4px 10px !important;
+        background: rgba(0, 212, 255, 0.1) !important;
+        border: 1px solid rgba(0, 212, 255, 0.2) !important;
+        border-radius: 6px !important;
+        color: rgba(0, 212, 255, 0.9) !important;
     }
     
     .featured-arrow {
-        opacity: 1 !important;
+        opacity: 0.7 !important;
         position: absolute !important;
-        top: 16px !important;
-        right: 16px !important;
+        top: 20px !important;
+        right: 20px !important;
+        z-index: 3 !important;
+        width: 28px !important;
+        height: 28px !important;
+    }
+    
+    .featured-arrow svg {
+        width: 100% !important;
+        height: 100% !important;
     }
     
     .featured-item:active {
         transform: scale(0.98) !important;
-        background: rgba(44, 44, 46, 0.95) !important;
+    }
+    
+    .featured-item:active .featured-image {
+        opacity: 0.4 !important;
     }
     
     /* ── GLASS CARDS - Universal Fix ── */
