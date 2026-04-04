@@ -2792,75 +2792,161 @@ img { max-width: 100%; display: block; }
 }
 
 /* ── Tablets Portrait (768px - 1024px) ── */
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+    /* Navigation */
+    .nav-glass { padding: 1rem 1.5rem; }
+    .nav-links { gap: 2rem; }
+    .nav-link { font-size: 0.65rem; }
+    
+    /* Hero Section */
     .hero {
         flex-direction: column;
-        text-align: center;
-        padding: 8rem 2rem 4rem;
-        gap: 2rem;
+        padding: 7rem 2.5rem 4rem;
+        gap: 2.5rem;
+        min-height: auto;
     }
     
     .hero-content { 
-        max-width: 100%; 
-        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        order: 2;
     }
+    
+    .hero-title .title-word { font-size: clamp(2.2rem, 6vw, 3.2rem); }
     .hero-subtitle { justify-content: center; }
     .hero-description { 
         margin-left: auto; 
         margin-right: auto; 
-        max-width: 600px;
+        max-width: 650px;
+        font-size: 1rem;
     }
-    .hero-cta { justify-content: center; flex-wrap: wrap; }
-    .hero-stats { justify-content: center; flex-wrap: wrap; }
-    .hero-title .title-word { font-size: clamp(2rem, 6vw, 3rem); }
+    .hero-cta { justify-content: center; gap: 1.2rem; }
+    .hero-stats { justify-content: center; gap: 2.5rem; }
     
-    .holo-card-wrapper {
-        position: relative;
+    /* Profile Card */
+    .profile-card-wrapper {
+        position: relative !important;
         right: auto;
         top: auto;
         transform: none;
         margin-top: 2rem;
         display: flex;
         justify-content: center;
+        order: 3;
     }
     .profile-card { width: 340px; height: 450px; }
     
-    .section-title { font-size: clamp(2rem, 5vw, 3rem); }
-    .featured-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .featured-item { padding: 2rem; }
+    /* Section Styling */
+    .section-container { padding: 0 2.5rem; }
+    .section-title { font-size: clamp(2.2rem, 5vw, 3rem); }
+    .section-header { justify-content: center; text-align: center; margin-bottom: 3rem; }
+    .section-line { display: none; }
     
-    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .contact-form-wrap { padding: 2rem; }
-    
-    .project-card { 
-        grid-template-columns: 1fr; 
-        padding: 2rem;
-        gap: 2rem;
+    /* Featured Projects - 2 Column for Tablets */
+    .featured-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 1.8rem;
+        margin-bottom: 2.5rem;
     }
-    .project-card:nth-child(even) { direction: ltr; }
-    .project-visual { aspect-ratio: 16/9; }
-    .project-info .project-num { font-size: 3rem; }
-    .project-info .project-name { font-size: 1.5rem; }
-    
-    .skills-bars { grid-template-columns: 1fr; gap: 1.5rem; }
-    .skill-category-block { margin-bottom: 3rem; }
-    
-    .edu-timeline::before { left: 20px; }
-    .edu-item { 
-        flex-direction: column !important; 
-        padding-left: 50px; 
-        text-align: left !important;
-        gap: 0;
+    .featured-item { 
+        padding: 1.8rem; 
+        min-height: 350px;
+        border-radius: 20px;
     }
-    .edu-marker { left: 20px; }
-    .edu-content { margin-left: 0; }
+    .featured-title { font-size: 1.2rem; }
+    .featured-desc { font-size: 0.8rem; }
+    .featured-content { padding: 1.5rem; }
     
+    /* Interests Grid - 2 Columns */
     .interests-orbit { 
         grid-template-columns: repeat(2, 1fr); 
-        gap: 1.5rem;
+        gap: 1.8rem;
+    }
+    .interest-card { 
+        padding: 2rem;
+        text-align: center;
+    }
+    .card-title { font-size: 1.2rem; }
+    .card-desc { font-size: 0.85rem; line-height: 1.6; }
+    
+    /* Contact Section - 2 Columns */
+    .contact-grid { 
+        grid-template-columns: 1.1fr 0.9fr; 
+        gap: 2.5rem;
+        align-items: flex-start;
+    }
+    .contact-form-wrap { 
+        padding: 2.2rem; 
+        border-radius: 20px;
+    }
+    .contact-form { gap: 1.4rem; }
+    .form-group input, 
+    .form-group textarea { font-size: 0.92rem; padding: 0.7rem 0; }
+    .form-group label { font-size: 0.68rem; margin-bottom: 0.45rem; }
+    .contact-info-side { gap: 1.4rem; }
+    .info-card { 
+        padding: 1.6rem; 
+        border-radius: 16px;
+    }
+    .social-cards { 
+        flex-direction: row; 
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+    .social-card { 
+        padding: 1.3rem; 
+        flex: 1;
+        border-radius: 14px;
     }
     
-    .glass-card { padding: 2rem; }
+    /* Project Cards - Better Layout */
+    .project-card { 
+        grid-template-columns: 1.1fr 0.9fr; 
+        padding: 2.2rem;
+        gap: 2rem;
+        border-radius: 20px;
+    }
+    .project-card:nth-child(even) { direction: ltr; }
+    .project-card:nth-child(even) > * { direction: ltr; }
+    .project-visual { 
+        aspect-ratio: 4/3;
+        border-radius: 16px;
+    }
+    .project-info .project-num { font-size: 3.5rem; opacity: 0.2; }
+    .project-info .project-name { font-size: 1.6rem; }
+    .project-info .project-desc { font-size: 0.9rem; }
+    
+    /* Skills - 2 Columns */
+    .skills-bars { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 2rem;
+    }
+    .skill-cat-header { margin-bottom: 1.5rem; }
+    .skill-category-block { margin-bottom: 3rem; }
+    
+    /* Education Timeline */
+    .edu-timeline::before { left: 24px; }
+    .edu-item { 
+        flex-direction: column !important; 
+        padding-left: 60px; 
+        text-align: left !important;
+        gap: 1rem;
+    }
+    .edu-marker { left: 24px; }
+    .edu-content { 
+        margin-left: 0;
+        padding: 1.8rem;
+        border-radius: 16px;
+    }
+    
+    /* Cards & Components */
+    .glass-card { 
+        padding: 2rem; 
+        border-radius: 20px;
+    }
+    .page-hero-title { font-size: clamp(2.5rem, 6vw, 3.5rem); }
+    .page-hero-subtitle { font-size: 0.8rem; }
 }
 
 /* ── Large Phones & Small Tablets (576px - 768px) ── */
