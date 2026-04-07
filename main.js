@@ -841,13 +841,11 @@ class BubblePopGame {
                 }
             }
             
-            // Increase difficulty over time
+            // Increase difficulty over time (only affects spawn rate, not bubble speed)
             if (this.timeLeft === 20) {
-                this.difficulty = 1.3;
-                this.spawnRate = 550;
+                this.spawnRate = 600; // More bubbles spawn
             } else if (this.timeLeft === 10) {
-                this.difficulty = 1.6;
-                this.spawnRate = 400;
+                this.spawnRate = 450; // Even more bubbles
             }
             
             if (this.timeLeft <= 0) {
@@ -923,21 +921,24 @@ class BubblePopGame {
         bubble.style.height = size + 'px';
         
         // Random horizontal position with safe margins
+        const arenaWidth = this.arena.offsetWidth;
+        const arenaHeight = this.arena.offsetHeight;
         const margin = size / 2 + 10;
-        const maxX = Math.max(margin, this.arena.offsetWidth - size - margin);
+        const maxX = Math.max(margin, arenaWidth - size - margin);
         const posX = Math.random() * (maxX - margin) + margin;
         bubble.style.left = posX + 'px';
         
-        // Start position below arena
-        const arenaHeight = this.arena.offsetHeight;
-        bubble.style.bottom = '-' + (size + 20) + 'px';
+        // Position using top (start below the arena, end above it)
+        bubble.style.top = arenaHeight + size + 'px';
         
-        // MOBILE FIX: Slower, more stable speed on mobile
-        const baseSpeed = isMobile ? 5.5 - (size / 50) : 4.5 - (size / 40);
-        const duration = Math.max(isMobile ? 3.5 : 2.5, baseSpeed / this.difficulty);
+        // Speed increases based on score - higher score = faster bubbles
+        // Base duration: 6-7s, at 100+ points: ~3-4s
+        const baseDuration = isMobile ? 6 : 5;
+        const sizeBonus = (size - 45) / 60; // 0 to ~1 based on size
+        const scoreSpeedUp = Math.min(this.score / 50, 2.5); // Max 2.5s reduction at 125+ points
+        const duration = Math.max(2.5, baseDuration + sizeBonus * 1.5 - scoreSpeedUp + Math.random() * 0.5);
         
         // Assign bubble type and color
-        const types = ['normal', 'golden', 'rainbow'];
         const typeRand = Math.random();
         let bubbleType = 'normal';
         if (typeRand > 0.95) {
@@ -964,10 +965,11 @@ class BubblePopGame {
         this.arena.appendChild(bubble);
         this.bubbles.add(bubble);
         
-        // MOBILE FIX: Simpler animation with less wobble on mobile
+        // Animation: bubble rises from bottom to top
         const startTime = performance.now();
-        const startY = -size - 20;
-        const endY = arenaHeight + size + 50;
+        const startY = arenaHeight + size; // Start below arena
+        const endY = -size - 50; // End above arena (off-screen top)
+        const totalDistance = startY - endY;
         const wobbleAmount = isMobile ? 8 + Math.random() * 8 : 15 + Math.random() * 15;
         const wobbleSpeed = isMobile ? 1.5 + Math.random() * 1 : 2 + Math.random() * 2;
         
@@ -984,18 +986,21 @@ class BubblePopGame {
                 return;
             }
             
-            // MOBILE FIX: Smoother animation with requestAnimationFrame throttling
-            const currentY = startY + (endY - startY) * progress;
+            // Calculate current Y position (moving upward)
+            const currentY = startY - (totalDistance * progress);
             const wobbleX = Math.sin(elapsed * wobbleSpeed) * wobbleAmount;
+            
+            // Apply position directly using top
+            bubble.style.top = currentY + 'px';
             
             if (isMobile) {
                 // Simpler transform for mobile performance
-                bubble.style.transform = `translate(${wobbleX}px, ${-currentY}px)`;
+                bubble.style.transform = `translateX(${wobbleX}px)`;
             } else {
                 // Full effects for desktop
                 const rotate = Math.sin(elapsed * 1.5) * 10;
                 const scale = 1 + Math.sin(elapsed * 3) * 0.05;
-                bubble.style.transform = `translate(${wobbleX}px, ${-currentY}px) rotate(${rotate}deg) scale(${scale})`;
+                bubble.style.transform = `translateX(${wobbleX}px) rotate(${rotate}deg) scale(${scale})`;
             }
             
             bubble._animationId = requestAnimationFrame(animate);
