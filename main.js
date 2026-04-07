@@ -1214,24 +1214,20 @@ class BubblePopGame {
 // XXVI. INITIALIZE THE AURA ENGINE
 // ═══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-    // ── Mobile Performance: Make hero content visible immediately ──
+    // ── Mobile Detection ──
     const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
                      window.innerWidth <= 768 ||
                      'ontouchstart' in window;
     
     if (isMobile) {
-        // Force hero content visible immediately
-        const heroElements = document.querySelectorAll(`
-            .hero-title, .title-word, .hero-subtitle, .subtitle-text,
-            .hero-description, .hero-cta, .hero-stats, .hero-badge,
-            .profile-card-wrapper, .hero-content
-        `);
-        heroElements.forEach(el => {
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-            el.style.animation = 'none';
-        });
-        console.log('✓ Mobile: Hero content made visible immediately');
+        // Add scroll progress indicator for mobile
+        const scrollProgress = document.createElement('div');
+        scrollProgress.className = 'scroll-progress';
+        document.body.prepend(scrollProgress);
+        
+        // Force hero section visible immediately (animations will play)
+        document.body.classList.add('mobile-animations-enabled');
+        console.log('✓ Mobile: Apple-style animations enabled');
     }
     
     // ── Core Systems ──
@@ -1354,8 +1350,8 @@ class ScrollAnimations {
         
         this.observerOptions = {
             root: null,
-            rootMargin: this.isMobileDevice ? '0px' : '0px 0px -100px 0px',
-            threshold: this.isMobileDevice ? 0.05 : 0.1
+            rootMargin: '0px 0px -50px 0px',
+            threshold: 0.1
         };
         
         this.init();
@@ -1368,20 +1364,12 @@ class ScrollAnimations {
     }
     
     init() {
-        // On mobile, make everything visible immediately for performance
-        if (this.isMobileDevice) {
-            this.makeAllVisible();
-            console.log('✓ Mobile: Content made visible immediately');
-            return;
-        }
-        
-        // Create observer
+        // Create observer for all devices (including mobile)
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    // Optionally unobserve after animation
-                    // this.observer.unobserve(entry.target);
+                    entry.target.classList.add('revealed');
+                    // Keep observing for re-animation if needed
                 }
             });
         }, this.observerOptions);
@@ -1392,56 +1380,92 @@ class ScrollAnimations {
         // Observe all elements with animation classes
         this.observeElements();
         
-        console.log('✓ Scroll Animations initialized');
+        // Add scroll progress tracking
+        if (this.isMobileDevice) {
+            this.initScrollProgress();
+            this.initMobileAnimations();
+        }
+        
+        console.log('✓ Scroll Animations initialized (Mobile Enhanced)');
     }
     
-    makeAllVisible() {
-        // On mobile, show everything without animations for better performance
-        const elements = document.querySelectorAll(`
-            .fade-in, .fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right,
-            .scale-in, .scale-in-up, .rotate-in, .blur-in, .slide-in-bounce,
-            .animate-on-scroll, .glass-card, .featured-item, .interest-card,
-            .project-card, .skill-category-block, .edu-item, .section-title,
-            section, .hero-content, .profile-card-wrapper, .title-word,
-            .hero-title, .hero-subtitle, .hero-description, .hero-cta, .hero-stats
-        `);
+    initScrollProgress() {
+        // Update scroll progress indicator
+        const updateProgress = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.documentElement.style.setProperty('--scroll-progress', `${progress}%`);
+        };
         
-        elements.forEach(el => {
-            el.classList.add('animated');
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-            el.style.animation = 'none';
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateProgress();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+    }
+    
+    initMobileAnimations() {
+        // Add floating animation to profile card
+        const profileCard = document.querySelector('.profile-card-wrapper');
+        if (profileCard) {
+            profileCard.classList.add('mobile-float');
+        }
+        
+        // Add pulse glow to special elements
+        const glowElements = document.querySelectorAll('.hero-cta .btn, .featured-item');
+        glowElements.forEach(el => {
+            el.classList.add('mobile-pulse-glow');
         });
     }
     
     autoAnnotate() {
-        // Auto-add fade-in-up to sections
+        // Stagger animation delays for card groups
+        const staggerGroups = [
+            '.glass-card',
+            '.featured-item', 
+            '.interest-card',
+            '.project-card',
+            '.skill-category-block',
+            '.edu-item'
+        ];
+        
+        staggerGroups.forEach(selector => {
+            document.querySelectorAll(selector).forEach((el, index) => {
+                el.classList.add(`stagger-${(index % 8) + 1}`);
+            });
+        });
+        
+        // Auto-add reveal tracking to sections
         document.querySelectorAll('section:not(.hero)').forEach(section => {
-            if (!section.classList.contains('fade-in-up')) {
-                section.classList.add('fade-in-up');
-            }
+            section.classList.add('mobile-fade-up');
         });
         
-        // Auto-add animations to cards
-        document.querySelectorAll('.glass-card, .featured-item, .interest-card, .project-card, .skill-category-block, .edu-item').forEach((el, index) => {
-            if (!el.className.match(/fade-in|scale-in|slide-in/)) {
-                el.classList.add('scale-in-up', `stagger-${(index % 5) + 1}`);
-            }
-        });
-        
-        // Auto-add to titles
-        document.querySelectorAll('.section-title').forEach(title => {
-            if (!title.className.match(/fade-in/)) {
-                title.classList.add('fade-in-up');
+        // Auto-add to section titles
+        document.querySelectorAll('.section-title, .section-header').forEach(title => {
+            if (!title.classList.contains('mobile-fade-up')) {
+                title.classList.add('mobile-fade-up');
             }
         });
     }
     
     observeElements() {
+        // Observe all animated elements
         const animatedElements = document.querySelectorAll(`
             .fade-in, .fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right,
             .scale-in, .scale-in-up, .rotate-in, .blur-in, .slide-in-bounce,
-            .animate-on-scroll
+            .animate-on-scroll,
+            .mobile-fade-up, .mobile-scale-up, .mobile-slide-left, .mobile-slide-right,
+            .mobile-zoom-in, .mobile-flip-up, .mobile-blur-in, .mobile-bounce-in,
+            .mobile-rotate-in, .mobile-reveal,
+            .glass-card, .featured-item, .interest-card, .project-card,
+            .skill-category-block, .edu-item, .section-title, .section-header,
+            section:not(.hero)
         `);
         
         animatedElements.forEach(el => {

@@ -5263,7 +5263,7 @@ button.loading::after {
             rgba(0, 0, 0, 1) 100%) !important;
     }
     
-    /* iOS Typography - FORCE VISIBILITY */
+    /* iOS Typography - Allow Hero Animations */
     .hero-title,
     .hero-title .title-word {
         font-size: clamp(2.25rem, 10vw, 3rem) !important;
@@ -5272,10 +5272,8 @@ button.loading::after {
         line-height: 1.1 !important;
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
-        opacity: 1 !important;
-        transform: none !important;
-        animation: none !important;
         text-shadow: 0 0 30px rgba(0, 212, 255, 0.3) !important;
+        /* Allow entrance animation */
     }
     
     .title-line {
@@ -5292,9 +5290,7 @@ button.loading::after {
         color: var(--aqua-primary) !important;
         -webkit-text-fill-color: var(--aqua-primary) !important;
         margin: 12px 0 !important;
-        opacity: 1 !important;
-        transform: none !important;
-        animation: none !important;
+        /* Allow entrance animation */
     }
     
     .hero-description,
@@ -5306,8 +5302,7 @@ button.loading::after {
         -webkit-text-fill-color: rgba(235, 235, 245, 0.7) !important;
         letter-spacing: -0.01em !important;
         max-width: 100% !important;
-        opacity: 1 !important;
-        transform: none !important;
+        /* Allow entrance animation */
         animation: none !important;
     }
     
@@ -6236,6 +6231,534 @@ button.loading::after {
     a:active,
     .liquid-btn:active {
         transition-duration: 0.1s !important;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   🍎 APPLE iOS-STYLE MOBILE SCROLL ANIMATIONS
+   Premium, fluid animations that work on both iOS and Android
+   Inspired by Apple's motion design language
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Mobile Animation Base Classes ── */
+@media only screen and (max-width: 768px), (hover: none) and (pointer: coarse) {
+    
+    /* iOS Spring Timing Functions */
+    :root {
+        --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --spring-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --spring-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        --spring-swift: cubic-bezier(0.55, 0, 0.1, 1);
+        --spring-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL ANIMATIONS - iOS Style
+       ═══════════════════════════════════════ */
+    
+    /* Base state for all animated elements */
+    .mobile-reveal {
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+    
+    .mobile-reveal.revealed {
+        opacity: 1;
+    }
+    
+    /* ── 1. FADE UP (Apple's Signature) ── */
+    .mobile-fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s var(--spring-smooth),
+                    transform 0.6s var(--spring-bounce);
+    }
+    
+    .mobile-fade-up.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* ── 2. SCALE UP (iOS App Icon Style) ── */
+    .mobile-scale-up {
+        opacity: 0;
+        transform: scale(0.85);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.5s var(--spring-bounce);
+    }
+    
+    .mobile-scale-up.revealed {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    /* ── 3. SLIDE FROM LEFT ── */
+    .mobile-slide-left {
+        opacity: 0;
+        transform: translateX(-40px);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.6s var(--spring-elastic);
+    }
+    
+    .mobile-slide-left.revealed {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    /* ── 4. SLIDE FROM RIGHT ── */
+    .mobile-slide-right {
+        opacity: 0;
+        transform: translateX(40px);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.6s var(--spring-elastic);
+    }
+    
+    .mobile-slide-right.revealed {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    /* ── 5. ZOOM IN (iOS Photo Style) ── */
+    .mobile-zoom-in {
+        opacity: 0;
+        transform: scale(0.7);
+        transition: opacity 0.4s ease-out,
+                    transform 0.6s var(--spring-bounce);
+    }
+    
+    .mobile-zoom-in.revealed {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    /* ── 6. FLIP UP (3D Card Reveal) ── */
+    .mobile-flip-up {
+        opacity: 0;
+        transform: perspective(800px) rotateX(15deg) translateY(25px);
+        transform-origin: bottom center;
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.7s var(--spring-bounce);
+    }
+    
+    .mobile-flip-up.revealed {
+        opacity: 1;
+        transform: perspective(800px) rotateX(0) translateY(0);
+    }
+    
+    /* ── 7. BLUR IN (iOS Focus Effect) ── */
+    .mobile-blur-in {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(15px);
+        transition: opacity 0.5s var(--spring-smooth),
+                    filter 0.6s var(--spring-smooth),
+                    transform 0.5s var(--spring-smooth);
+    }
+    
+    .mobile-blur-in.revealed {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+    
+    /* ── 8. BOUNCE IN (Playful Elements) ── */
+    .mobile-bounce-in {
+        opacity: 0;
+        transform: scale(0.3);
+        transition: opacity 0.3s ease-out,
+                    transform 0.6s var(--spring-elastic);
+    }
+    
+    .mobile-bounce-in.revealed {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    /* ── 9. ROTATE IN (Creative Elements) ── */
+    .mobile-rotate-in {
+        opacity: 0;
+        transform: rotate(-10deg) translateY(20px);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.6s var(--spring-bounce);
+    }
+    
+    .mobile-rotate-in.revealed {
+        opacity: 1;
+        transform: rotate(0) translateY(0);
+    }
+    
+    /* ── 10. STAGGER DELAY CLASSES ── */
+    .stagger-1 { transition-delay: 0.05s; }
+    .stagger-2 { transition-delay: 0.1s; }
+    .stagger-3 { transition-delay: 0.15s; }
+    .stagger-4 { transition-delay: 0.2s; }
+    .stagger-5 { transition-delay: 0.25s; }
+    .stagger-6 { transition-delay: 0.3s; }
+    .stagger-7 { transition-delay: 0.35s; }
+    .stagger-8 { transition-delay: 0.4s; }
+    
+    /* ═══════════════════════════════════════
+       SECTION-SPECIFIC ANIMATIONS
+       ═══════════════════════════════════════ */
+    
+    /* Hero Section - Dramatic entrance */
+    .hero .hero-title {
+        animation: heroTitleReveal 0.8s var(--spring-bounce) forwards;
+    }
+    
+    .hero .hero-subtitle {
+        animation: heroSubtitleReveal 0.6s var(--spring-smooth) 0.2s forwards;
+        opacity: 0;
+    }
+    
+    .hero .hero-description {
+        animation: heroDescReveal 0.6s var(--spring-smooth) 0.35s forwards;
+        opacity: 0;
+    }
+    
+    .hero .hero-cta {
+        animation: heroCTAReveal 0.5s var(--spring-bounce) 0.5s forwards;
+        opacity: 0;
+    }
+    
+    .hero .profile-card-wrapper {
+        animation: profileCardReveal 0.8s var(--spring-elastic) 0.3s forwards;
+        opacity: 0;
+    }
+    
+    @keyframes heroTitleReveal {
+        0% {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            filter: blur(8px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+    }
+    
+    @keyframes heroSubtitleReveal {
+        0% {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes heroDescReveal {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes heroCTAReveal {
+        0% {
+            opacity: 0;
+            transform: translateY(25px) scale(0.9);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    @keyframes profileCardReveal {
+        0% {
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+    
+    /* ═══════════════════════════════════════
+       CARD ANIMATIONS
+       ═══════════════════════════════════════ */
+    
+    /* Glass Cards - iOS Widget Style */
+    .glass-card {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.6s var(--spring-bounce);
+    }
+    
+    .glass-card.revealed {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    
+    /* Featured Items - Magazine Style */
+    .featured-item {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.6s var(--spring-smooth),
+                    transform 0.7s var(--spring-bounce);
+    }
+    
+    .featured-item.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Interest Cards - Tile Animation */
+    .interest-card {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+        transition: opacity 0.4s var(--spring-smooth),
+                    transform 0.5s var(--spring-elastic);
+    }
+    
+    .interest-card.revealed {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    
+    /* Project Cards - Slide Up with Scale */
+    .project-card {
+        opacity: 0;
+        transform: translateY(50px) scale(0.92);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.65s var(--spring-bounce);
+    }
+    
+    .project-card.revealed {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    
+    /* Skill Category Blocks - Staggered Slide */
+    .skill-category-block {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.6s var(--spring-elastic);
+    }
+    
+    .skill-category-block.revealed {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    /* Education Items - Timeline Style */
+    .edu-item {
+        opacity: 0;
+        transform: translateX(30px) scale(0.95);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.6s var(--spring-bounce);
+    }
+    
+    .edu-item.revealed {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    
+    /* Section Titles - Dramatic Reveal */
+    .section-title,
+    .section-header {
+        opacity: 0;
+        transform: translateY(25px);
+        transition: opacity 0.5s var(--spring-smooth),
+                    transform 0.6s var(--spring-bounce);
+    }
+    
+    .section-title.revealed,
+    .section-header.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* ═══════════════════════════════════════
+       INTERACTIVE TAP ANIMATIONS
+       ═══════════════════════════════════════ */
+    
+    /* iOS-style press effect for all interactive elements */
+    .glass-card:active,
+    .featured-item:active,
+    .interest-card:active,
+    .project-card:active,
+    .skill-category-block:active,
+    .edu-item:active {
+        transform: scale(0.97) !important;
+        transition: transform 0.1s ease-out !important;
+    }
+    
+    /* Button tap effect */
+    .btn:active,
+    .cta-btn:active,
+    button:active {
+        transform: scale(0.95) !important;
+        transition: transform 0.08s ease-out !important;
+    }
+    
+    /* ═══════════════════════════════════════
+       SCROLL PROGRESS INDICATOR
+       ═══════════════════════════════════════ */
+    
+    .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: rgba(0, 212, 255, 0.1);
+        z-index: 10000;
+    }
+    
+    .scroll-progress::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: linear-gradient(90deg, 
+            var(--aqua-primary) 0%, 
+            var(--aqua-light) 50%,
+            var(--aqua-teal) 100%);
+        width: var(--scroll-progress, 0%);
+        transition: width 0.1s linear;
+        box-shadow: 0 0 10px var(--aqua-primary),
+                    0 0 20px rgba(0, 212, 255, 0.5);
+    }
+    
+    /* ═══════════════════════════════════════
+       PARALLAX SCROLL EFFECTS (Subtle)
+       ═══════════════════════════════════════ */
+    
+    .mobile-parallax-slow {
+        will-change: transform;
+        transition: transform 0.1s linear;
+    }
+    
+    .mobile-parallax-fast {
+        will-change: transform;
+        transition: transform 0.05s linear;
+    }
+    
+    /* ═══════════════════════════════════════
+       FLOATING ELEMENTS
+       ═══════════════════════════════════════ */
+    
+    @keyframes mobileFloat {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+    
+    @keyframes mobileFloatRotate {
+        0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-6px) rotate(2deg);
+        }
+    }
+    
+    @keyframes mobilePulseGlow {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+        50% {
+            box-shadow: 0 0 35px rgba(0, 212, 255, 0.4);
+        }
+    }
+    
+    .mobile-float {
+        animation: mobileFloat 3s ease-in-out infinite;
+    }
+    
+    .mobile-float-rotate {
+        animation: mobileFloatRotate 4s ease-in-out infinite;
+    }
+    
+    .mobile-pulse-glow {
+        animation: mobilePulseGlow 2s ease-in-out infinite;
+    }
+    
+    /* ═══════════════════════════════════════
+       TEXT REVEAL ANIMATIONS
+       ═══════════════════════════════════════ */
+    
+    @keyframes textRevealUp {
+        0% {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .text-reveal-line {
+        overflow: hidden;
+    }
+    
+    .text-reveal-line span {
+        display: inline-block;
+        animation: textRevealUp 0.6s var(--spring-bounce) forwards;
+        opacity: 0;
+    }
+    
+    /* ═══════════════════════════════════════
+       SHIMMER LOADING EFFECT
+       ═══════════════════════════════════════ */
+    
+    @keyframes shimmer {
+        0% {
+            background-position: -200% 0;
+        }
+        100% {
+            background-position: 200% 0;
+        }
+    }
+    
+    .mobile-shimmer {
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s ease-in-out infinite;
+    }
+    
+    /* ═══════════════════════════════════════
+       SECTION TRANSITIONS
+       ═══════════════════════════════════════ */
+    
+    section {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.6s var(--spring-smooth),
+                    transform 0.7s var(--spring-bounce);
+    }
+    
+    section.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Hero section should always be visible */
+    section.hero {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }
 
